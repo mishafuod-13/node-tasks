@@ -22,7 +22,6 @@ router.route('/:boardId').get(async (req, res) => {
     .status(404)
     .send(err.message)
   }
-
  });
 
  router.route('/:boardId').put(async (req, res) => {

@@ -1,8 +1,7 @@
 const {Board} = require('./boards.model.js');
 
-class BoardBD extends Board {
+class BoardBD {
     constructor(){
-        super();
         this.boards = [new Board()];
     }
 
@@ -10,9 +9,10 @@ class BoardBD extends Board {
      const res = Object.keys (options);
      if (res.length === 2) {
         res.forEach (optionkey => {
-        if ((optionkey !== "columns" && optionkey !== "title")) {
-            throw Error ("Bad reqest")
-        }});
+          if ((optionkey !== "columns" && optionkey !== "title")) {
+              throw Error ("Bad reqest")
+          }
+        });
         const NewBoard = new Board (options);
         this.boards.push(NewBoard)
         return NewBoard;
@@ -69,6 +69,5 @@ class BoardBD extends Board {
     }
 
 } 
-
 const BD = new BoardBD ();
 module.exports.BD = BD; 
