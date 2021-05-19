@@ -28,6 +28,10 @@ class Task  {
       return this;
     }
 
+    deleteUserId (){
+      this.userId = null;
+    }
+
 }  
 
 module.exports.Task = Task;

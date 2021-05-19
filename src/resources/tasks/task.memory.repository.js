@@ -3,18 +3,16 @@ const {Task} = require('./task.model');
 
 class TasksBD {
     constructor() {
-        this.BoardBD = BD;
         this.taskrep = {};
     }
 
     addTask (boardId, taskoption) {
       const board  = BD.findBoard(boardId);
-      const tasks = this.taskrep[boardId];
       const task = new Task (taskoption);
       task.boardId = boardId;
       if (board) {
-        if (tasks) {
-          tasks.push(task);
+        if (this.taskrep[boardId]) {
+          this.taskrep[boardId].push(task);
         } else {
           this.taskrep[boardId] = [task]; 
         }
@@ -40,6 +38,21 @@ class TasksBD {
           }
         });
       return result;
+    }
+
+    deleteTask(boardId, taskId){
+      const board = this.taskrep[boardId]
+      let res;
+      board.forEach((task, index) => {
+        if(task.id === taskId){
+          res = index;
+        }
+      });
+      if (typeof res === 'number') {
+        board.splice(res,1);
+        return "OK"
+      }
+      throw Error ("Access token is missing or invalid");
     }
 
     getTaskById (boardId, taskId) {
