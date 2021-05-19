@@ -6,9 +6,9 @@ class Task  {
       title = 'AAAtyty',
       order = 0,
       description = 'string',
-      userId = null,
-      columnId = null,
-      boardId = null,
+      userId = 'string',
+      columnId = 'string',
+      boardId = 'string',
     } = {}) {
       this.id = id;
       this.title = title;
@@ -18,6 +18,16 @@ class Task  {
       this.columnId = columnId;
       this.boardId = boardId;
     }
+
+    updateTask(options) {
+      Object.keys(options).forEach((key) => {
+        if (options[key] !== this[key]) {
+         this[key] = options[key]; 
+        }
+      })
+      return this;
+    }
+
 }  
 
 module.exports.Task = Task;

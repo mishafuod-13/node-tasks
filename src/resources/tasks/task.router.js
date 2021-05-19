@@ -1,8 +1,8 @@
 const router = require('express').Router();
-
 const {addTask} = require('./task.service.js');
 const {getTasks} = require('./task.service.js');
 const {getTaskById} = require('./task.service.js');
+const {updateTask} = require('./task.service.js')
 
 router.route('/:boardId/tasks').post(async (req, res) => {
     try {
@@ -43,7 +43,7 @@ router.route('/:boardId/tasks').post(async (req, res) => {
 
    router.route('/:boardId/tasks/:taskId').put(async (req, res) => {
     try {
-      const result = await getTaskById(req.params.boardId, req.params.taskId, req.body);
+      const result = await updateTask (req.params.boardId, req.params.taskId, req.body);
       res
         .json(result)
     } catch (err) {

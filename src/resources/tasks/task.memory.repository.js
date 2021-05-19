@@ -32,14 +32,14 @@ class TasksBD {
     }
 
     updateTask (boardId, taskId, options) {
-        const NewTask = new Task (options);
-        NewTask.title = options.title;
-        this.tasksrep[boardId].forEach((item, ind) => {
-        if (item.id === taskId) {
-            this.tasksrep[boardId].splice(ind, 1, NewTask);
+      let result
+        this.taskrep[boardId].forEach(item => {
+          if (item.id === taskId) {
+            item.updateTask(options);
+            result = item;
           }
         });
-        return NewTask;
+      return result;
     }
 
     getTaskById (boardId, taskId) {
