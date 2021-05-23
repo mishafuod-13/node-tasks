@@ -1,16 +1,15 @@
 const { v4: uuidv4 } = require('uuid');
+const {Column} = require('./column.model.js');
 
-class User {
+class Board  {
   constructor({
     id = uuidv4(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd'
+    title = 'AAAA',
+    columns = [new Column()],
   } = {}) {
     this.id = id;
-    this.name = name;
-    this.login = login;
-    this.password = password;
+    this.title = title;
+    this.columns = columns;
   }
 
   toResponse () {
@@ -19,4 +18,4 @@ class User {
   }  
 }
 
-module.exports.User = User;
+module.exports.Board = Board;
