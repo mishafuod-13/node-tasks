@@ -1,4 +1,5 @@
 const UserModel = require('./user.model.js').User;
+const {userUpdateDelete} = require('./user.update.delete');
 
 class UsersBD {
   constructor() {
@@ -13,10 +14,11 @@ class UsersBD {
   }
 
 
-  deleteUser( userId ) {
+  async deleteUser( userId ) {
     const result = this.findUser(userId);
     if (result) {
       this.users.splice(result,1);
+      await userUpdateDelete(userId);
       return "OK"
     }
     return result;
