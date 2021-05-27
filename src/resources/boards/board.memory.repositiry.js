@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 const {Board} = require('./boards.model.js');
 
 class BoardBD {

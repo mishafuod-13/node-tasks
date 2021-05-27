@@ -1,4 +1,11 @@
 const BD = require('./user.memory.repository').UserBD;
+/**
+ * This class requires the modules {@link module:xyzcorp/helper} and
+ * {@link module:xyzcorp/helper.ShinyWidget#polish}.
+ * @class
+ * @requires module:xyzcorp/helper
+ * @requires xyzcorp/helper.ShinyWidget#polish
+ */
 
 const switcher = (req) => {
   let answer = null;
@@ -7,6 +14,8 @@ const switcher = (req) => {
   }
    return answer;
 }
+
+
 
 const getAll = () => BD.getAll();
 const getUser = (userId) => BD.getUser(userId);
