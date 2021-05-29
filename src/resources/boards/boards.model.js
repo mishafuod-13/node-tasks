@@ -15,10 +15,11 @@ class Board  {
    /**
     * @requires Column
     * @requires uuidv4
+    * @this Board
      * Create a Board entity.
      * @param {string} [id=uuidv4()] - Board ID.
      * @param {string} [title="AAAA"] - Title board.
-     * @param {object} [columns=[new Column()]] - Array with entities Сolumn.
+     * @param {Array} [columns=[new Column()]] - Array with entities Сolumn.
      */
   constructor({
     id = uuidv4(),
