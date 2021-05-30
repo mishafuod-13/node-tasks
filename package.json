@@ -54,6 +54,7 @@
     "yamljs": "0.3.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.12",
     "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",
     "debug": "4.3.1",

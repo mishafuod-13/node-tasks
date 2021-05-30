@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from "express";
+
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
@@ -6,14 +8,14 @@ const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/boards.router');
 const taskRouter =  require('./resources/tasks/task.router');
 
-const app = express();
+const App = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-app.use(express.json());
+App.use(express.json());
 
-app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+App.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.use('/', (req, res, next) => {
+App.use('/', (req: Request, res: Response, next: NextFunction ) => {
   if (req.originalUrl === '/') {
     res.send('Service is running!');
     return;
@@ -21,8 +23,8 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-app.use ('/boards', boardRouter);
-app.use ('/boards', taskRouter);
+App.use('/users', userRouter);
+App.use ('/boards', boardRouter);
+App.use ('/boards', taskRouter);
 
-module.exports = app;
+module.exports = App;
