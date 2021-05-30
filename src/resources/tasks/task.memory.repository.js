@@ -1,6 +1,6 @@
 /**
  * @module BD
- * @description imports the model DB Board entity
+ * @description import the model DB Board entity
  */
 const {BD} = require('../boards/board.memory.repositiry');
 
