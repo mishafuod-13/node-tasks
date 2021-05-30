@@ -3,14 +3,14 @@
  * @description imports the model DB Board entity
  */
 const {BD} = require('./board.memory.repositiry');
-
+import { MyBoard } from './boards.model'; 
 /** 
  * The function calls the entity's getAll method 
  * @method 
  * @name getAll
  * @return {Array} 
  * */
-const getAll = () => BD.getAll();
+const getAll = (): Array <MyBoard> => BD.getAll();
 
 /** 
  * The function calls the entity's addBoard method. 
@@ -20,7 +20,7 @@ const getAll = () => BD.getAll();
  * @param {object} req  
  * @returns {object|Error} 
  * */
-const addBoard = (req) =>  BD.addBoard(req);
+const addBoard = (req:string) =>  BD.addBoard(req);
 
 /** 
  * The function calls the entity's getBoard method. 
@@ -30,7 +30,7 @@ const addBoard = (req) =>  BD.addBoard(req);
  * @param {string} req - boardId 
  * @returns {object|Error} 
  * */
-const getBoard = (req) => BD.getBoard(req);
+const getBoard = (req:string):object|Error => BD.getBoard(req);
 
 /** 
  * The function calls the entity's updateBoard method. 
@@ -41,7 +41,7 @@ const getBoard = (req) => BD.getBoard(req);
  * @param {object} options - values, where should be updated in entity "board"
  * @returns {object|null} 
  * */
-const updateBoard = (req, options) => BD.updateBoard(req, options);
+const updateBoard = (req:string, options:object):object|null => BD.updateBoard(req, options);
 
 /** 
  * The function calls the entity's deleteBoard method. 
@@ -51,7 +51,7 @@ const updateBoard = (req, options) => BD.updateBoard(req, options);
  * @param {string} req - boardId 
  * @returns {string|null} 
  * */
-const deleteBoard = (req) => BD.deleteBoard(req);
+const deleteBoard = (req:string):string|null => BD.deleteBoard(req);
 
 
 module.exports.deleteBoard = deleteBoard;

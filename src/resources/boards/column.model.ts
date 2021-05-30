@@ -7,6 +7,9 @@
 const { v4: uuidv4 } = require('uuid');
 
 class Column  {
+  id: string;
+  title: string;
+  order:number;
 /**
  * @requires uuidv4
      * Create a column.

@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
  * Import Column-model module
  * @module Column
  */
-const {Column} = require('./column.model.js');
+const {Column} = require('./column.model');
 
  /** Class representing a board. */
 
