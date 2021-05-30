@@ -9,7 +9,8 @@
   "description": "REST service starter for RS School",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "ts-node src/server.ts",
+    "build": "tsc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
@@ -53,11 +54,13 @@
     "yamljs": "0.3.0"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",
     "debug": "4.3.1",
     "dirty-chai": "2.0.1",
     "eslint": "7.2.0",
     "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
@@ -68,6 +71,8 @@
     "lint-staged": "10.5.4",
     "nodemon": "2.0.7",
     "prettier": "2.2.1",
-    "supertest": "6.1.3"
+    "supertest": "6.1.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
   }
 }
