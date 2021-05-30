@@ -1,4 +1,9 @@
+/**
+ * @module BD
+ * @description imports the model DB Board entity
+ */
 const {BD} = require('../boards/board.memory.repositiry');
+
 const {Task} = require('./task.model');
 
 class TasksBD {
