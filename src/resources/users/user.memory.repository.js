@@ -3,12 +3,16 @@
  * @module User
  */
 const UserModel = require('./user.model.js').User;
-
+/**
+ * Import function
+ * @module userUpdateDelete
+ */
 const {userUpdateDelete} = require('./user.update.delete');
 
 class UsersBD {
  /**
     * @requires User
+    * @requires userUpdateDelete
     * @this UsersBD
      * Create a UserBD entity.
      * @param {Array} [this.users=[]] - Array with Users entities.
