@@ -1,5 +1,4 @@
 /**
- * uuidv4 module
  * @module Board
  * @description imports the model Board entity
  */
