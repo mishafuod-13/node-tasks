@@ -11,7 +11,16 @@ const {Column} = require('./column.model.js');
 
  /** Class representing a board. */
 
+export interface MyBoard {
+  id:String;
+  title:String;
+  columns: Array<Object>;
+}
+
 class Board  {
+  public id:String;
+  public title:String;
+  public columns: Array<Object>;
    /**
     * @requires Column
     * @requires uuidv4

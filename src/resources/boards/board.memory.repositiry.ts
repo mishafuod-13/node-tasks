@@ -2,11 +2,13 @@
  * @module Board
  * @description imports the model Board entity
  */
-const {Board} = require('./boards.model.js');
+const {Board} = require('./boards.model');
+import { MyBoard } from './boards.model';
 
 
  /** Class representing a database for board entity. */
 class BoardDB {
+    boards: Array <MyBoard> ;
  /**
     * @requires Board
     * @this BoardDB
@@ -14,7 +16,7 @@ class BoardDB {
      * @param {Array} [this.boards=[new Board()]] - Array with entities Boards.
      */
     constructor(){
-        this.boards = [new Board()];
+       this.boards = [new Board()];
     }
 
      /** 
@@ -22,9 +24,9 @@ class BoardDB {
      * @param {object} options - Object with options
      * @param {string} options.title  - Title for Board entity
      * @param {Array} options.columns - Array with objects Columns (optional)
-      * @returns {object|Error} return new Board object or error if input values are incorrect.
+     * @returns {object|Error} return new Board object or error if input values are incorrect.
       */
-    addBoard (options) {
+    addBoard (options: object):object {
      const res = Object.keys (options);
      if (res.length === 2) {
         res.forEach (optionkey => {
@@ -47,7 +49,7 @@ class BoardDB {
        * @param {Array} options.columns - Array with objects Columns (optional)
        * @returns {object|null} - return new Board object or null if boardId are incorrect/not exist.
        */
-    updateBoard (boardId, options) {
+    updateBoard (boardId:string, options:object) {
        const result = this.findBoard(boardId);
         if (result) {
           const newBoard = new Board (options);
@@ -62,9 +64,9 @@ class BoardDB {
        * @param {string} boardId - Id by which to search.
        * @returns {object|Error} - return Board object or error if boardId are incorrect/not exist.
        */
-    getBoard (boardId) {
+    getBoard (boardId:string) {
         const result = this.findBoard(boardId);
-        if (result !== null){
+        if (result !== null && result !== undefined){
           return this.boards[result];
         }
         throw Error ('Board not found')
@@ -75,9 +77,9 @@ class BoardDB {
        * @param {string} boardId - Id by which to search.
        * @returns {number|Error|null} - return index of array entity Board| error if there are several entities | null if board not exist .
        */
-    findBoard (boardId){
-      const result = [];
-      this.boards.forEach ( (board, index) => {
+    findBoard (boardId:string){
+      const result:Array<number> = [] ;
+      this.boards.forEach ( (board: MyBoard , index:number): void => {
         if ( board.id === boardId ) {
           result.push(index);
          }
@@ -96,7 +98,7 @@ class BoardDB {
        * @param {string} boardId - Id board by which to search.
        * @returns {string|null}  - "OK" if the board is successfully removed | null if board not exist
        */
-    deleteBoard (boardId) {
+    deleteBoard (boardId:string) {
     const result = this.findBoard(boardId);
     if (result)  {
       this.boards.splice(result,1);
@@ -108,14 +110,14 @@ class BoardDB {
     /** Get the this.board value.
       * @returns {Array}  - returns an array with all the boards
       */
-    getAll () {
+    getAll (): Array<Object> {
         return this.boards; 
     }
 
 } 
 
 /** @constant {object} BD - creates an instance of the class BoardDB */
-const BD = new BoardDB();
+const BD: BoardDB = new BoardDB();
 /**
  * Imports the created instance of the BoardDB class.
  * @module BD
