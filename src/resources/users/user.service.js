@@ -1,7 +1,7 @@
 const BD = require('./user.memory.repository').UserBD;
 
 
-const switcher = (req) => {
+const createNewUser = (req) => {
   let answer = null;
   if (req) {
    answer = BD.createNewUser(req)
@@ -21,4 +21,4 @@ module.exports.getAll = getAll;
 module.exports.getUser = getUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
-module.exports.switcher = switcher;
+module.exports.createNewUser = createNewUser;

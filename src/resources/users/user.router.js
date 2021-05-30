@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {getAll} = require('./user.service.js');
 const {getUser} = require('./user.service.js');
-const {switcher} = require('./user.service.js');
+const {createNewUser} = require('./user.service.js');
 const {deleteUser} = require('./user.service.js');
 const {updateUser} = require('./user.service.js');
 
@@ -33,7 +33,7 @@ router.route('/:userId').put(async (req, res) => {
  });
 
 router.route('/').post(async (req, res) => {
-  const newUser = await switcher(req.body); 
+  const newUser = await createNewUser(req.body); 
   res.status(201).json(newUser);
 });
 
