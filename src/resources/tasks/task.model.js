@@ -6,18 +6,6 @@ const { v4: uuidv4 } = require('uuid');
 
 
 class Task  {
-  /**
- * @requires uuidv4
- * * @this Task
-     * Create Task - entity.
-     * @param {string} [id=uuidv4()] - Task ID.
-     * @param {string} [title="AAAtyty"]  - Task title.
-     * @param {number} [order=0] - Task order.
-     * @param {string} [description="string"] - Task description.
-     * @param {string} [userId = "string"] - User Id. 
-     * @param {string} [columnId = "string"] - Column Id.
-     * @param {string} [boardId = "string"] - Board Id.
-     */
     constructor ({
       id = uuidv4(),
       title = 'AAAtyty',

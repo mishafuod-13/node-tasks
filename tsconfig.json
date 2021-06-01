@@ -2,9 +2,9 @@
     "compilerOptions": {
       "target": "es2020",
       "module": "commonjs",
-      "allowJs": false,
+      "allowJs": true,//change that!
       "outDir": "./build",
-      "rootDir": "./src",
+      "rootDir": "./src/",
       "downlevelIteration": false,
       "strict": true,
       "noUnusedLocals": true,
@@ -25,6 +25,7 @@
       "build"
     ],
     "include": [
-      "./src/**/*.ts"
+      "./src/**/*.ts",
+      "./src/**/*.js"
     ]
 }

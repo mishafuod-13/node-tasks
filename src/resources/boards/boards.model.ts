@@ -1,26 +1,24 @@
-/**
- * Import uuidv4 module
- * @module uuidv4
- */
+
+import { IColumn } from './column.model';
+
 const { v4: uuidv4 } = require('uuid');
-/**
- * Import Column-model module
- * @module Column
- */
+
 const {Column} = require('./column.model');
 
- /** Class representing a board. */
 
-export interface MyBoard {
-  id:String;
-  title:String;
-  columns: Array<Object>;
+export interface IBoard {
+  id:string;
+  title:string;
+  columns?: Array<IColumn>;
 }
 
 class Board  {
-  public id:String;
-  public title:String;
-  public columns: Array<Object>;
+  id:string;
+
+  title:string;
+
+  columns?: Array<IColumn>;
+
    /**
     * @requires Column
     * @requires uuidv4

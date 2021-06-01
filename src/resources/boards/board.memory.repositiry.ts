@@ -1,32 +1,18 @@
-/**
- * @module Board
- * @description imports the model Board entity
- */
+
+import { IBoard } from './boards.model';
+
 const {Board} = require('./boards.model');
-import { MyBoard } from './boards.model';
 
-
- /** Class representing a database for board entity. */
 class BoardDB {
-    boards: Array <MyBoard> ;
- /**
-    * @requires Board
-    * @this BoardDB
-     * Create a BoardDB entity.
-     * @param {Array} [this.boards=[new Board()]] - Array with entities Boards.
-     */
+    boards: Array <IBoard> ;
+
+
     constructor(){
        this.boards = [new Board()];
     }
 
-     /** 
-     * Accepts options for creating a new entity Board and entering it into the database.
-     * @param {object} options - Object with options
-     * @param {string} options.title  - Title for Board entity
-     * @param {Array} options.columns - Array with objects Columns (optional)
-     * @returns {object|Error} return new Board object or error if input values are incorrect.
-      */
-    addBoard (options: object):object {
+
+    addBoard (options: IBoard):IBoard {
      const res = Object.keys (options);
      if (res.length === 2) {
         res.forEach (optionkey => {
@@ -41,15 +27,7 @@ class BoardDB {
      throw Error ("Bad reqest")
     }
 
-      /** 
-       * Accepts options for update a entity Board in "Database".
-       * @param {string} boardId - Id by which to search.
-       * @param {object} options - Object with options
-       * @param {string} options.title  - Title for Board entity
-       * @param {Array} options.columns - Array with objects Columns (optional)
-       * @returns {object|null} - return new Board object or null if boardId are incorrect/not exist.
-       */
-    updateBoard (boardId:string, options:object) {
+    updateBoard (boardId:string, options:IBoard ) {
        const result = this.findBoard(boardId);
         if (result) {
           const newBoard = new Board (options);
@@ -79,7 +57,7 @@ class BoardDB {
        */
     findBoard (boardId:string){
       const result:Array<number> = [] ;
-      this.boards.forEach ( (board: MyBoard , index:number): void => {
+      this.boards.forEach ( (board: IBoard , index:number): void => {
         if ( board.id === boardId ) {
           result.push(index);
          }
@@ -110,7 +88,7 @@ class BoardDB {
     /** Get the this.board value.
       * @returns {Array}  - returns an array with all the boards
       */
-    getAll (): Array<Object> {
+    getAll (): Array<IBoard> {
         return this.boards; 
     }
 
