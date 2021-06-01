@@ -1,3 +1,7 @@
+import { Request, Response } from 'express';
+
+import {ITask} from './task.model';
+
 const router = require('express').Router();
 const {addTask} = require('./task.service');
 const {getTasks} = require('./task.service');
@@ -5,9 +9,11 @@ const {getTaskById} = require('./task.service');
 const {updateTask} = require('./task.service');
 const {deleteTask} = require('./task.service')
 
-router.route('/:boardId/tasks').post(async (req, res) => {
+router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<void> => {
     try {
-      const NewTask = await addTask(req.params.boardId, req.body); 
+      const {boardId} = req.params;
+      const posTask:ITask = req.body
+      const NewTask = await addTask(boardId, posTask); 
         res
         .status(201)
         .json(NewTask);
@@ -18,9 +24,10 @@ router.route('/:boardId/tasks').post(async (req, res) => {
     }
   });
 
-  router.route('/:boardId/tasks').get(async (req, res) => {
+  router.route('/:boardId/tasks').get(async (req:Request, res:Response) => {
     try {
-      const result = await getTasks(req.params.boardId);
+      const {boardId} = req.params;
+      const result = await getTasks(boardId);
         res
          .json(result)
     } catch (err) {
@@ -30,9 +37,10 @@ router.route('/:boardId/tasks').post(async (req, res) => {
     }
    });
   
-   router.route('/:boardId/tasks/:taskId').get(async (req, res) => {
+   router.route('/:boardId/tasks/:taskId').get(async (req:Request, res:Response) => {
     try {
-      const result = await getTaskById(req.params.boardId,req.params.taskId);
+      const {boardId, taskId} = req.params;
+      const result = await getTaskById(boardId,taskId);
       res
         .json(result)
     } catch (err) {
@@ -42,9 +50,10 @@ router.route('/:boardId/tasks').post(async (req, res) => {
     }
    });
 
-   router.route('/:boardId/tasks/:taskId').put(async (req, res) => {
+   router.route('/:boardId/tasks/:taskId').put(async (req:Request, res:Response) => {
     try {
-      const result = await updateTask (req.params.boardId, req.params.taskId, req.body);
+      const {boardId, taskId} = req.params;
+      const result = await updateTask (boardId, taskId, req.body);
       res
         .json(result)
     } catch (err) {
@@ -54,9 +63,10 @@ router.route('/:boardId/tasks').post(async (req, res) => {
     }
    });
 
-   router.route('/:boardId/tasks/:taskId').delete(async (req, res) => {
+   router.route('/:boardId/tasks/:taskId').delete(async (req:Request, res:Response) => {
     try {
-      await deleteTask (req.params.boardId, req.params.taskId);
+      const {boardId, taskId} = req.params;
+      await deleteTask (boardId, taskId);
       res
         .status(204)
         .send('The task has been deleted')

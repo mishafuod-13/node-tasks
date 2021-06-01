@@ -1,4 +1,3 @@
-
 const { v4: uuidv4 } = require('uuid');
 
 export interface ITask {
@@ -13,7 +12,6 @@ export interface ITask {
   boardId?:string;
   updateTask(options: ITask): Task;
   deleteUserId(): void;
-
 }
 
 
