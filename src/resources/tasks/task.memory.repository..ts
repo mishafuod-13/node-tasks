@@ -4,7 +4,7 @@ const {BD} = require('../boards/board.memory.repositiry');
 
 const {Task} = require('./task.model');
 
-interface ITaskrep {
+export interface ITaskrep {
   [boardId:string]: Array<ITask>
 }
 

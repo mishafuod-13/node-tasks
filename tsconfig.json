@@ -27,5 +27,5 @@
     "include": [
       "./src/**/*.ts",
       "./src/**/*.js"
-    ]
+, "src/resources/users/user.update.delete.ts"    ]
 }
