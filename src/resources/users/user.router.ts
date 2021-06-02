@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const router = require('express').Router();
 const {getAll} = require('./user.service');
 const {getUser} = require('./user.service');
@@ -5,13 +7,14 @@ const {createNewUser} = require('./user.service');
 const {deleteUser} = require('./user.service');
 const {updateUser} = require('./user.service');
 
-router.route('/').get(async (req, res) => {
+router.route('/').get(async (_req:Request, res:Response) => {
   const users = await getAll();
   res.json(users);
 });
 
-router.route('/:userId').get(async (req, res) => {
- const result = await getUser(req.params.userId);
+router.route('/:userId').get(async (req:Request, res:Response) => {
+const {userId} = req.params;
+ const result = await getUser(userId);
  if (result) {
    res.json(result)
  } else {
@@ -21,8 +24,9 @@ router.route('/:userId').get(async (req, res) => {
  }
 });
 
-router.route('/:userId').put(async (req, res) => {
-  const result = await updateUser(req.params.userId, req.body);
+router.route('/:userId').put(async (req:Request, res:Response) => {
+  const {userId} = req.params;
+  const result = await updateUser(userId, req.body);
   if (result) {
     res.json(result)
   } else {
@@ -32,13 +36,14 @@ router.route('/:userId').put(async (req, res) => {
   }
  });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req:Request, res:Response) => {
   const newUser = await createNewUser(req.body); 
   res.status(201).json(newUser);
 });
 
-router.route('/:userId').delete(async (req, res) => {
-   const result = await deleteUser(req.params.userId);
+router.route('/:userId').delete(async (req:Request, res:Response) => {
+   const {userId} = req.params;
+   const result = await deleteUser(userId);
    if (result === "OK") {
      res
      .status(204)
@@ -49,8 +54,5 @@ router.route('/:userId').delete(async (req, res) => {
       .send("Access token is missing or invalid")
    }
 });
-
-
-
 
 module.exports = router;

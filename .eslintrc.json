@@ -27,7 +27,6 @@
   ],
   "rules": {
     "import/extensions": 0,
-    "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
     "node/no-missing-require": 0,
