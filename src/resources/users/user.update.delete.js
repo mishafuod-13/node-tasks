@@ -2,7 +2,7 @@
  * Import TaskBD -entity
  * @module TaskBD
  */
-const {TaskBD} = require('../tasks/task.memory.repository')
+const {TaskBD} = require('../tasks/task.memory.repository.')
 
 /** @function userUpdateDelete */
  /**

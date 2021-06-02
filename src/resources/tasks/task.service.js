@@ -2,7 +2,7 @@
  * @module TaskBD
  * @description Export TaskBD module
  */
-const {TaskBD} = require('./task.memory.repository');
+const {TaskBD} = require('./task.memory.repository.');
 
 /** 
  * Calls a method on a module. See the documentation of the TasksBD class.
