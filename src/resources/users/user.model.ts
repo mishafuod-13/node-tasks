@@ -1,8 +1,23 @@
 
 const { v4: uuidv4 } = require('uuid');
 
+export interface IUser {
+  id:string;
+  name:string;
+  login:string;
+  password?:string;
+  
+}
+
 class User {
 
+  id:string;
+
+  name:string;
+
+  login:string;
+
+  password?:string;
 
   constructor({
     id = uuidv4(),
@@ -16,8 +31,8 @@ class User {
     this.password = password;
   }
 
-  toResponse () {
-    const { id, name, login } = this;
+  toResponse ():IUser {
+    const { id, name, login }:IUser = this;
     return { id, name, login };
   }  
 }
