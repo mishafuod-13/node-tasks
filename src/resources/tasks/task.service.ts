@@ -1,6 +1,6 @@
 import {ITask} from './task.model'
 
-const {TaskBD} = require('./task.memory.repository.');
+const {TaskBD} = require('./task.memory.repository');
 
 
 const addTask = (boardId:string, options:ITask)  =>  TaskBD.addTask( boardId,options );
