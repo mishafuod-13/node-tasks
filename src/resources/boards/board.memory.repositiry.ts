@@ -4,7 +4,7 @@ import { IBoard } from './boards.model';
 const {Board} = require('./boards.model');
 
 class BoardDB {
-    readonly boards: Array <IBoard> ;
+   boards: Array <IBoard> ;
 
     constructor(){
        this.boards = [new Board()];
@@ -26,41 +26,27 @@ class BoardDB {
      throw Error ("Bad reqest")
     }
 
-   async updateBoard (boardId:string, options:IBoard) {
-       const result = this.findBoard(boardId);
-       return result.then(
-         (response:number|null|undefined):IBoard => {
-            if (typeof response !== undefined && response !== null) {
-              const newBoard = new Board (options);
-              this.boards.splice(response as number,1,newBoard);
-              return newBoard as IBoard;
-          }
-          throw Error ('Board not found');
-          },
-          (rej:PromiseRejectionEvent):void => {
-            throw Error ('Rejected promise:' + rej)
-          } 
-       )
+   async updateBoard (boardId:string, options:IBoard):Promise<IBoard> {
+       const result = await this.findBoard(boardId);
+       if ( result !== null) {
+         const newBoard = new Board (options);
+         this.boards.splice(result,1,newBoard);
+         return newBoard as IBoard;
+       }
+      throw Error ('Board not found');
     }
 
 
-   async getBoard (boardId:string) {
-        const result = this.findBoard(boardId);
-       return result.then(
-          (response:number|null|undefined): IBoard => {
-            if (typeof response === 'number' && response !== null) {
-              return this.boards?.[response] as IBoard;
-            }
-            throw Error ('Board not found');
-            },
-          (rej:PromiseRejectionEvent):void => {
-          throw Error ('Rejected promise:' + rej)
-          }
-        );
+   async getBoard (boardId:string):Promise<IBoard> {
+      const result = await this.findBoard(boardId);
+      if (result !== null) {
+      return this.boards[result] as IBoard;
+      }
+      throw Error ('Board not found');
     }
 
 
-    async findBoard (boardId:string): Promise<null|number> {
+    async findBoard (boardId:string): Promise <null|number> {
       const result:Array<number> = [] ;
       this.boards.forEach ( (board: IBoard , index:number): void => {
         if ( board.id === boardId ) {
@@ -77,24 +63,17 @@ class BoardDB {
     }
 
 
-   async deleteBoard (boardId:string) {
-    const result = this.findBoard(boardId);
-    return result.then (
-      (res: number|null):'OK' => {
-        if (res) {
-          this.boards.splice(res as number,1);
-          return "OK"
-        }
-        throw Error ('Board not found');
-      },
-      (rej:PromiseRejectionEvent):void => {
-        throw Error ('Rejected promise:' + rej);
-      } 
-    )
+   async deleteBoard (boardId:string):Promise <'OK'> {
+    const result = await this.findBoard(boardId);
+      if (result !== null){
+        this.boards.splice(result,1);
+        return "OK"
+      }
+      throw Error ('Board not found');
     }
 
 
-    getAll (): Array<IBoard> {
+    async getAll (): Promise<Array<IBoard>> {
         return this.boards; 
     }
 
