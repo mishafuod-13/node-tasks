@@ -12,7 +12,7 @@ class BoardDB {
 
 
    async addBoard (options: IBoard):Promise<IBoard> {
-     const res = Object.keys (options);
+     const res = Object.keys(options);
      if (res.length === 2) {
         res.forEach (optionkey => {
           if ((optionkey !== "columns" && optionkey !== "title")) {
@@ -48,19 +48,19 @@ class BoardDB {
         const result = this.findBoard(boardId);
        return result.then(
           (response:number|null|undefined): IBoard => {
-            if (typeof response === 'number' && typeof response !== undefined && response !== null) {
+            if (typeof response === 'number' && response !== null) {
               return this.boards?.[response] as IBoard;
             }
             throw Error ('Board not found');
             },
           (rej:PromiseRejectionEvent):void => {
-            throw Error ('Rejected promise:' + rej)
+          throw Error ('Rejected promise:' + rej)
           }
         );
     }
 
 
-    async findBoard (boardId:string) {
+    async findBoard (boardId:string): Promise<null|number> {
       const result:Array<number> = [] ;
       this.boards.forEach ( (board: IBoard , index:number): void => {
         if ( board.id === boardId ) {
@@ -71,7 +71,7 @@ class BoardDB {
           if (result.length > 1) {
             throw new Error ("Write error: multiple boards")
            }
-        return result[0];
+        return result[0] as number;
         }
      return null;
     }
@@ -80,8 +80,7 @@ class BoardDB {
    async deleteBoard (boardId:string) {
     const result = this.findBoard(boardId);
     return result.then (
-      (res: number|null|undefined):'OK' => {
-        console.log (res, typeof res, Object.prototype.toString.call(res))
+      (res: number|null):'OK' => {
         if (res) {
           this.boards.splice(res as number,1);
           return "OK"

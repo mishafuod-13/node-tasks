@@ -2,7 +2,7 @@ import { IBoard } from './boards.model';
 
 const {BD} = require('./board.memory.repositiry'); 
 
-const  getAll = async(): Promise<Array <IBoard>> => BD.getAll();
+const getAll = async(): Promise<Array <IBoard>> => BD.getAll();
 
 const addBoard = async (req:string): Promise<IBoard> =>  BD.addBoard(req);
 
