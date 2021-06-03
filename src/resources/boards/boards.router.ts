@@ -4,11 +4,13 @@ import { IBoard } from './boards.model';
 
 const router = require('express').Router();
 
-const {getAll} = require('./boards.service');
-const {addBoard} = require('./boards.service');
-const {getBoard} = require('./boards.service');
-const {updateBoard} = require('./boards.service');
-const {deleteBoard} = require('./boards.service');
+const { getAll, 
+  addBoard, 
+  getBoard, 
+  updateBoard, 
+  deleteBoard
+ } = require('./boards.service');
+
 
 router.route('/').get(async (__req: Request, res: Response) => {
   const boards:Array <IBoard> = await getAll();

@@ -16,8 +16,8 @@ class TasksBD {
         this.taskrep = {};
     }
 
-    addTask (boardId:string, taskoption:ITask) {
-      const board  = BD.findBoard(boardId);
+    async addTask (boardId:string, taskoption:ITask) {
+      const board  = await BD.findBoard(boardId);
       const task = new Task (taskoption);
       task.boardId = boardId;
       if (board) {
@@ -31,8 +31,8 @@ class TasksBD {
       return Error ("Bad reqest");
     }
 
-    getTasks (boardId:string) {
-       const board  = BD.findBoard(boardId);
+    async getTasks (boardId:string) {
+       const board  = await BD.findBoard(boardId);
        if (!board){
          throw Error ('Access token is missing or invalid')
        }
@@ -73,8 +73,8 @@ class TasksBD {
     }
 
 
-    getTaskById (boardId:string, taskId:string) {
-       const tasks = this.getTasks(boardId);
+    async getTaskById (boardId:string, taskId:string) {
+       const tasks = await this.getTasks(boardId);
        let result;
        if (typeof tasks !== 'undefined') {
        tasks.forEach(item => {

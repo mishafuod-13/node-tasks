@@ -8,14 +8,14 @@ const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/boards.router');
 const taskRouter =  require('./resources/tasks/task.router');
 
-const App = express();
+const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-App.use(express.json());
+app.use(express.json());
 
-App.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-App.use('/', (req: Request, res: Response, next: NextFunction ) => {
+app.use('/', (req: Request, res: Response, next: NextFunction ) => {
   if (req.originalUrl === '/') {
     res.send('Service is running!');
     return;
@@ -23,8 +23,8 @@ App.use('/', (req: Request, res: Response, next: NextFunction ) => {
   next();
 });
 
-App.use('/users', userRouter);
-App.use ('/boards', boardRouter);
-App.use ('/boards', taskRouter);
+app.use('/users', userRouter);
+app.use ('/boards', boardRouter);
+app.use ('/boards', taskRouter);
 
-module.exports = App;
+module.exports = app;
