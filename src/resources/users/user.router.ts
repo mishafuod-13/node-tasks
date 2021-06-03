@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 
 const router = require('express').Router();
-const {getAll} = require('./user.service');
-const {getUser} = require('./user.service');
-const {createNewUser} = require('./user.service');
-const {deleteUser} = require('./user.service');
-const {updateUser} = require('./user.service');
+const {
+  getAll,
+  createNewUser,
+  getUser,
+  deleteUser,
+  updateUser 
+} =  require ('./user.service');
 
 router.route('/').get(async (_req:Request, res:Response) => {
   const users = await getAll();

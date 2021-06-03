@@ -12,26 +12,26 @@ class UsersBD {
     this.users = [];
   }
 
-  createNewUser (options:string) {
+  async createNewUser (options:string):Promise<IUserResponse> {
     const newUser = new UserModel(options);
     this.users.push(newUser)
     return newUser.toResponse();
   }
 
-  deleteUser( userId:string ):string|null|number|undefined{
-    const result = this.findUser(userId);
-    if (result) {
+ async deleteUser( userId:string ):Promise<'OK'|null>{
+    const result = await this.findUser(userId);
+    if (result !== null && typeof result === 'number' ) {
       this.users.splice(result,1);
       userUpdateDelete(userId);
-      return "OK"
+      return "OK";
     }
-    return result;
+    return result as null;
   }
 
 
-  updateUser ( userId:string, options:IUser ):IUserResponse|number|null|undefined{
-    const result = this.findUser(userId);
-    if (result) {
+  async updateUser ( userId:string, options:IUser ):Promise<IUserResponse|null>{
+    const result = await this.findUser(userId);
+    if (result !== null) {
       const newUser = new UserModel (options);
       this.users.splice(result,1,newUser);
       return newUser?.toResponse()
@@ -40,18 +40,18 @@ class UsersBD {
   }
 
 
-  getUser (userId:string):IUserResponse|null|number|null|undefined {
-    const result = this.findUser(userId);
+  async getUser (userId:string):Promise<IUserResponse|null> {
+    const result = await this.findUser(userId);
     if (typeof result === 'number'){
         const user:IUser|undefined = this.users[result];
         if (typeof user !== 'undefined')
         return user.toResponse();
     }
-    return result;
+    return result as null;
   }
 
  
-  findUser (userId:string) {
+  async findUser (userId:string): Promise<number|null> {
     const result:number[] = [];
     this.users.forEach ( (user, index) => {
       if ( user.id === userId ) {
@@ -64,14 +64,14 @@ class UsersBD {
     return null;
   }
 
-   getAll () {
+  async getAll ():Promise<Array<IUserResponse>> {
       const reposit:Array<IUser> = this.users;
-      const arrResp:Array<IUserResponse> = reposit.map(user => user.toResponse());
+      const arrResp:Array<IUserResponse> = reposit.map (user => user.toResponse());
       return arrResp;
   }
   
 }
 
-const  UserBD = new UsersBD;
+const UserBD:UsersBD = new UsersBD();
 
 module.exports.UserBD = UserBD;

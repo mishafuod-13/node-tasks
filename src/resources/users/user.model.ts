@@ -31,14 +31,14 @@ class User {
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
-  } = {}) {
+  } = {} as IUser) {
     this.id = id;
     this.name = name;
     this.login = login;
     this.password = password;
   }
 
-  toResponse ():IUserResponse {
+  async toResponse ():Promise<IUserResponse> {
     const { id, name, login }:IUserResponse = this;
     return { id, name, login };
   }  
