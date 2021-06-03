@@ -39,7 +39,7 @@ class TasksBD {
        return this.taskrep[boardId]
     }
 
-    updateTask (boardId:string, taskId:string, options:ITask) {
+    async updateTask (boardId:string, taskId:string, options:ITask) {
       let result;
       if (typeof this.taskrep[boardId] !== 'undefined') {
         const board = this.taskrep[boardId] as Array<ITask>
@@ -55,7 +55,7 @@ class TasksBD {
     }
 
 
-    deleteTask(boardId:string, taskId:string){
+   async deleteTask(boardId:string, taskId:string) {
       const board = this.taskrep[boardId]
       let res;
       if (typeof this.taskrep[boardId] !== 'undefined') {

@@ -42,7 +42,7 @@ class Task  {
       userId = 'string',
       columnId = 'string',
       boardId = 'string',
-    } = {}) {
+    } = {} as ITask) {
       this.id = id;
       this.title = title;
       this.order = order;

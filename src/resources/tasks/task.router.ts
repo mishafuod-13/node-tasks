@@ -3,11 +3,12 @@ import { Request, Response } from 'express';
 import {ITask} from './task.model';
 
 const router = require('express').Router();
-const {addTask} = require('./task.service');
-const {getTasks} = require('./task.service');
-const {getTaskById} = require('./task.service');
-const {updateTask} = require('./task.service');
-const {deleteTask} = require('./task.service')
+const {
+  addTask, 
+  getTasks, 
+  getTaskById, 
+  updateTask,
+  deleteTask } = require('./task.service');
 
 router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<void> => {
     try {
@@ -78,7 +79,4 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
     }
    });
   
-
-
-
 module.exports = router;
