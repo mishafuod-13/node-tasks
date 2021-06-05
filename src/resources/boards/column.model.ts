@@ -1,6 +1,19 @@
+
 const { v4: uuidv4 } = require('uuid');
 
-class Column  {
+export interface IColumn {
+  id?:string;
+  title:string;
+  order:number;
+}
+
+class Column {
+  id: string;
+
+  title: string;
+
+  order:number;
+  
     constructor ({
       id = uuidv4(),
       title = "Djdsdddsd",
@@ -9,11 +22,6 @@ class Column  {
       this.id = id;
       this.title = title;
       this.order = order;
-    }
-   
-    toResponse() {
-      const { title, order } = this;
-      return { title, order };
     }
 }
 
