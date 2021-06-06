@@ -27,7 +27,7 @@ class UsersBD {
       userUpdateDelete(userId);
       return "OK";
     }
-    throw HandleError['Unauthorized'];
+    throw HandleError.Unauthorized;
   }
 
 
@@ -49,7 +49,7 @@ class UsersBD {
         if (typeof user !== 'undefined')
         return user.toResponse();
     }
-    throw HandleError['NotFound'];
+    throw HandleError.NotFound;
   }
 
  
@@ -63,7 +63,7 @@ class UsersBD {
        if (result.length === 1 && typeof result[0] !== 'undefined') {
         return result[0];
        }
-    throw HandleError['NotFound'];
+    throw HandleError.NotFound;
   }
 
   async getAll ():Promise<Array<IUserResponse>> {

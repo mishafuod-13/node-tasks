@@ -1,6 +1,7 @@
 
 import {Request, Response, NextFunction} from 'express';
 import { HandleError} from './handleerrors';
+
 const fs = require ('fs');
 const morgan = require('morgan');
 const path = require('path');
@@ -20,14 +21,13 @@ const errorLogStream = fs.createWriteStream(path.join(__dirname, 'error.log'), {
         errorLogStream.write(templstr);
         process.stdout.write(templstr);
         return;
-    } else {
+    } 
         const templstr = `HandleError:${err as HandleError}; ::Response Status Code:${err.status} :: Message:${err.message}\n`;
         errorLogStream.write(templstr);
         process.stdout.write(templstr);
         res.status(err.status).send(err.message);
-   }
+   
     next()
   }
   
-
 module.exports = {reqAccessLog, errorHandling};

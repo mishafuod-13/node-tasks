@@ -31,6 +31,8 @@
     "no-underscore-dangle": "off",
     "node/no-missing-require": 0,
     "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "no-sequences": 0,
     "node/no-missing-import": 0
   }
 }

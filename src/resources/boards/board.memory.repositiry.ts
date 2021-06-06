@@ -25,7 +25,7 @@ class BoardDB {
         this.boards.push(NewBoard)
         return NewBoard;
      }
-     throw HandleError['BadReqest'];
+     throw HandleError.BadReqest;
     }
 
    async updateBoard (boardId:string, options:IBoard):Promise<IBoard> {
@@ -35,7 +35,7 @@ class BoardDB {
          this.boards.splice(result,1,newBoard);
          return newBoard as IBoard;
        }
-      throw HandleError['BadReqest']
+      throw HandleError.BadReqest
     }
 
 
@@ -44,7 +44,7 @@ class BoardDB {
       if (result !== null) {
       return this.boards[result] as IBoard;
       }
-      throw HandleError['NotFound']
+      throw HandleError.NotFound
     }
 
 
@@ -71,7 +71,7 @@ class BoardDB {
         this.boards.splice(result,1);
         return "OK"
       }
-      throw HandleError['NotFound']
+      throw HandleError.NotFound
     }
 
 

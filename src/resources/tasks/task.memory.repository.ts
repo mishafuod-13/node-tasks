@@ -30,13 +30,13 @@ class TasksBD {
         }
         return task;
       }
-     throw HandleError['BadReqest']
+     throw HandleError.BadReqest
     }
 
     async getTasks (boardId:string) {
        const board  = await BD.findBoard(boardId);
        if (!board){
-         throw HandleError['NotFound']
+         throw HandleError.NotFound
        }
        return this.taskrep[boardId]
     }
@@ -55,7 +55,7 @@ class TasksBD {
       if (result ) {
        return result;
       }
-      throw HandleError ['NotFound']
+      throw HandleError .NotFound
     }
 
 
@@ -73,7 +73,7 @@ class TasksBD {
           return "OK"
         }
       }
-      throw HandleError['NotFound']
+      throw HandleError.NotFound
     }
 
 
@@ -88,7 +88,7 @@ class TasksBD {
        })
       }
       if (!result) {
-          throw HandleError['NotFound'];
+          throw HandleError.NotFound;
       }
       return result;
     }

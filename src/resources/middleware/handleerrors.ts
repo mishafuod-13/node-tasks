@@ -1,19 +1,24 @@
 
- export class HandleError extends Error {
-    status:number;
+export class HandleError extends Error {
+   readonly status:number;
 
-    message: string;
+   readonly message: string;
     
-    name: string;
+   readonly name: string;
 
-    constructor(status:number, message:string){
-        super();
-        this.name = 'HandleError',
+    constructor(status:number, message:string, name: string) {
+        super(name)
+        this.name = name,
         this.status = status,
         this.message = message
     }
 
 }
+
+const BadReq:HandleError = new HandleError(400, "Bad Reqest",'HandleError');
+const NotFound:HandleError = new HandleError(404, 'Not Found','HandleError');
+const Unauthorized:HandleError =  new HandleError(401, 'Unauthorized','HandleError')
+
 
 export interface IHandleEvent {
     [key:string]: HandleError;
@@ -21,8 +26,7 @@ export interface IHandleEvent {
 }
 
 module.exports = {
-    BadReqest: new HandleError(400, "Bad Reqest"),
-    NotFound: new HandleError(404, 'Not Found'),
-    Unauthorized: new HandleError(401, 'Unauthorized')
-
-} as IHandleEvent;
+    BadReqest: BadReq,
+    NotFound,
+    Unauthorized
+}
