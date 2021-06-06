@@ -20,7 +20,7 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
         .json(NewTask);
     } catch (err) {
       res
-        .status(400)
+        .status(err.status)
         .send(err.message)
     }
   });
@@ -33,7 +33,7 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
          .json(result)
     } catch (err) {
       res
-      .status(401)
+      .status(err.status)
       .send(err.message)
     }
    });
@@ -59,7 +59,7 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
         .json(result)
     } catch (err) {
       res
-      .status(404)
+      .status(err.status)
       .send(err.message)
     }
    });
@@ -72,9 +72,8 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
         .status(204)
         .send('The task has been deleted')
     } catch (err) {
-      
       res
-      .status(401)
+      .status(err.status)
       .send(err.message)
     }
    });

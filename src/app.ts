@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 const express = require('express');
+const {reqAccessLog} = require('./resources/middlewar/logger')
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
@@ -10,6 +11,7 @@ const taskRouter =  require('./resources/tasks/task.router');
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+
 
 app.use(express.json());
 
@@ -22,6 +24,8 @@ app.use('/', (req: Request, res: Response, next: NextFunction ) => {
   }
   next();
 });
+
+app.use(reqAccessLog);
 
 app.use('/users', userRouter);
 app.use ('/boards', boardRouter);

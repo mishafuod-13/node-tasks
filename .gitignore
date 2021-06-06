@@ -1,2 +1,4 @@
 node_modules/
 docs/
+src/resourses/middlewar/access.log
+rc/resourses/middlewar/error.log
