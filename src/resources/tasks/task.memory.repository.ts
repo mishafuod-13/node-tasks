@@ -2,7 +2,7 @@ import {ITask} from './task.model';
 
 const {BD} = require('../boards/board.memory.repositiry');
 
-const HandleError = require('../middlewar/handleerrors')
+const HandleError = require('../middleware/handleerrors')
 
 const {Task} = require('./task.model');
 

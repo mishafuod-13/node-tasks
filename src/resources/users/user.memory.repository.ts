@@ -2,7 +2,7 @@ import { IUser, IUserResponse } from "./user.model";
 
 const UserModel = require('./user.model').User;
 
-const HandleError = require('../middlewar/handleerrors')
+const HandleError = require('../middleware/handleerrors')
 
 const {userUpdateDelete} = require('./user.update.delete');
 

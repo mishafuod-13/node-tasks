@@ -3,9 +3,12 @@
     status:number;
 
     message: string;
+    
+    name: string;
 
     constructor(status:number, message:string){
         super();
+        this.name = 'HandleError',
         this.status = status,
         this.message = message
     }

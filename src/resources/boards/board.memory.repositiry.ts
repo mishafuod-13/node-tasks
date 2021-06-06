@@ -1,7 +1,7 @@
 
 import { IBoard } from './boards.model';
 
-const HandleError = require('../middlewar/handleerrors')
+const HandleError = require('../middleware/handleerrors')
 
 const {Board} = require('./boards.model');
 
