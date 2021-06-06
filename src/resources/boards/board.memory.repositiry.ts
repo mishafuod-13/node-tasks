@@ -1,6 +1,8 @@
 
 import { IBoard } from './boards.model';
 
+const HandleError = require('../middlewar/handleerrors')
+
 const {Board} = require('./boards.model');
 
 class BoardDB {
@@ -23,7 +25,7 @@ class BoardDB {
         this.boards.push(NewBoard)
         return NewBoard;
      }
-     throw Error ("Bad reqest")
+     throw HandleError['BadReqest'];
     }
 
    async updateBoard (boardId:string, options:IBoard):Promise<IBoard> {
@@ -33,7 +35,7 @@ class BoardDB {
          this.boards.splice(result,1,newBoard);
          return newBoard as IBoard;
        }
-      throw Error ('Board not found');
+      throw HandleError['BadReqest']
     }
 
 
@@ -42,7 +44,7 @@ class BoardDB {
       if (result !== null) {
       return this.boards[result] as IBoard;
       }
-      throw Error ('Board not found');
+      throw HandleError['NotFound']
     }
 
 
@@ -69,7 +71,7 @@ class BoardDB {
         this.boards.splice(result,1);
         return "OK"
       }
-      throw Error ('Board not found');
+      throw HandleError['NotFound']
     }
 
 

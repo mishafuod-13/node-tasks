@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import { IBoard } from './boards.model';
 
@@ -12,12 +12,17 @@ const { getAll,
  } = require('./boards.service');
 
 
-router.route('/').get(async (__req: Request, res: Response) => {
-  const boards:Array <IBoard> = await getAll();
-  res.json(boards);
+router.route('/').get(async (__req: Request, res: Response, next:NextFunction ) => {
+  try{
+    const boards:Array <IBoard> = await getAll();
+    res.json(boards);
+  } catch (err) {
+    next(err)
+  }
+
 });
 
-router.route('/:boardId').get(async (req:Request, res:Response) => {
+router.route('/:boardId').get(async (req:Request, res:Response, next:NextFunction) => {
   try {
     const result = await getBoard(req.params['boardId']);
     if (result)  {
@@ -25,37 +30,31 @@ router.route('/:boardId').get(async (req:Request, res:Response) => {
        .json(result)
     }
   } catch (err) {
-    res
-    .status(404)
-    .send(err.message)
+    next(err)
   }
  });
 
- router.route('/:boardId').put(async (req:Request, res:Response) => {
+ router.route('/:boardId').put(async (req:Request, res:Response, next: NextFunction) => {
   const result = await updateBoard(req.params['boardId'], req.body);
-  if (result) {
-    res.json(result)
-  } else {
-   res
-     .status(400)
-     .send("Bad reqest")
-  }
+    try{
+      res.json(result)
+    } catch (err) {
+      next(err)
+    }
 });
 
-router.route('/').post(async (req:Request, res: Response) => {
+router.route('/').post(async (req:Request, res: Response, next:NextFunction) => {
   try {
     const NewBoard = await addBoard(req.body); 
       res
       .status(201)
       .json(NewBoard);
   } catch (err) {
-    res
-      .status(400)
-      .send(err.message)
+    next(err);
   }
 });
 
-router.route('/:boardId').delete(async (req:Request, res:Response) => {
+router.route('/:boardId').delete(async (req:Request, res:Response, next: NextFunction) => {
   try {
   const result:string = await deleteBoard(req.params['boardId']);
     if (result === "OK") {
@@ -64,9 +63,7 @@ router.route('/:boardId').delete(async (req:Request, res:Response) => {
       .send("The board has been deleted");
     }
   } catch (err) {
-    res
-    .status(404)
-    .send(err.message)
+    next(err);
   }
 });
 

@@ -1,4 +1,5 @@
-class HandleError extends Error {
+
+ export class HandleError extends Error {
     status:number;
 
     message: string;
@@ -11,9 +12,14 @@ class HandleError extends Error {
 
 }
 
+export interface IHandleEvent {
+    [key:string]: HandleError;
+
+}
+
 module.exports = {
     BadReqest: new HandleError(400, "Bad Reqest"),
     NotFound: new HandleError(404, 'Not Found'),
     Unauthorized: new HandleError(401, 'Unauthorized')
 
-}
+} as IHandleEvent;

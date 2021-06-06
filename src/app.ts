@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 
+
 const express = require('express');
-const {reqAccessLog} = require('./resources/middlewar/logger')
+const {reqAccessLog, errorHandling} = require('./resources/middlewar/logger')
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
@@ -17,7 +18,7 @@ app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.use('/', (req: Request, res: Response, next: NextFunction ) => {
+app.use('/', (_err:Error, req: Request, res: Response, next: NextFunction ) => {
   if (req.originalUrl === '/') {
     res.send('Service is running!');
     return;
@@ -26,9 +27,13 @@ app.use('/', (req: Request, res: Response, next: NextFunction ) => {
 });
 
 app.use(reqAccessLog);
+app.use (errorHandling)
 
 app.use('/users', userRouter);
 app.use ('/boards', boardRouter);
 app.use ('/boards', taskRouter);
+
+
+app.use(errorHandling)
 
 module.exports = app;

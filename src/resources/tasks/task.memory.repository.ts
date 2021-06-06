@@ -36,7 +36,7 @@ class TasksBD {
     async getTasks (boardId:string) {
        const board  = await BD.findBoard(boardId);
        if (!board){
-         throw HandleError['Unauthorized']
+         throw HandleError['NotFound']
        }
        return this.taskrep[boardId]
     }
@@ -73,7 +73,7 @@ class TasksBD {
           return "OK"
         }
       }
-      throw HandleError['Unauthorized']
+      throw HandleError['NotFound']
     }
 
 
@@ -88,7 +88,7 @@ class TasksBD {
        })
       }
       if (!result) {
-          throw Error ('Access token is missing or invalid')
+          throw HandleError['NotFound'];
       }
       return result;
     }
