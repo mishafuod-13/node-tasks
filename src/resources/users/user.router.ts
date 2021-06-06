@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction} from 'express';
 
 const router = require('express').Router();
 const {
@@ -9,51 +9,56 @@ const {
   updateUser 
 } =  require ('./user.service');
 
-router.route('/').get(async (_req:Request, res:Response) => {
-  const users = await getAll();
-  res.json(users);
+router.route('/').get(async (_req:Request, res:Response, next: NextFunction) => {
+  try{
+    const users = await getAll();
+    res.json(users);
+  }
+  catch (err) {
+    next(err)
+  }
 });
 
-router.route('/:userId').get(async (req:Request, res:Response) => {
-const {userId} = req.params;
- const result = await getUser(userId);
- if (result) {
-   res.json(result)
- } else {
-  res
-    .status(404)
-    .send("User not found")
+router.route('/:userId').get(async (req:Request, res:Response, next: NextFunction) => {
+ try{
+  const {userId} = req.params;
+  const result = await getUser(userId);
+  res.json(result);
+ } catch (err){
+   next(err);
  }
 });
 
-router.route('/:userId').put(async (req:Request, res:Response) => {
-  const {userId} = req.params;
-  const result = await updateUser(userId, req.body);
-  if (result) {
+router.route('/:userId').put(async (req:Request, res:Response, next: NextFunction) => {
+  try {
+    const {userId} = req.params;
+    const result = await updateUser(userId, req.body);
     res.json(result)
-  } else {
-   res
-     .status(400)
-     .send("Bad reqest")
+  } catch (err) {
+    next(err);
   }
  });
 
-router.route('/').post(async (req:Request, res:Response) => {
-  const newUser = await createNewUser(req.body); 
-  res.status(201).json(newUser);
+router.route('/').post(async (req:Request, res:Response, next: NextFunction) => {
+  try{
+    const newUser = await createNewUser(req.body); 
+    res.status(201).json(newUser);
+  } catch (err) {
+    next(err)
+  }
 });
 
-router.route('/:userId').delete(async (req:Request, res:Response) => {
-   const {userId} = req.params;
-   const result = await deleteUser(userId);
-   if (result === "OK") {
-     res
-     .status(204)
-     .send("The user has been deleted")
-   } else {
-     res
-      .status(401)
-      .send("Access token is missing or invalid")
+router.route('/:userId').delete(async (req:Request, res:Response, next: NextFunction) => {
+   try{
+    const {userId} = req.params;
+    const result = await deleteUser(userId);
+    if (result === "OK") {
+      res
+      .status(204)
+      .send("The user has been deleted")
+    }
+   } catch(err){
+     next(err);
    }
 });
 
