@@ -13,7 +13,7 @@
     "build": "tsc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
+    "test:auth": "cross-denv DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "doc": "jsdoc -c ./jsdoc.json"
   },
   "keywords": [
@@ -49,6 +49,7 @@
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
     "express": "4.17.1",
+    "morgan": "^1.10.0",
     "swagger-ui-express": "4.1.6",
     "uuid": "8.3.2",
     "yamljs": "0.3.0"
