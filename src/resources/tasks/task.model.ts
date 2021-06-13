@@ -8,7 +8,7 @@ export interface ITask {
   order?:number;
   description?:string;
   userId?:string|null;
-  columnId?:string;
+  columnId? :string;
   boardId?:string;
   updateTask(options: ITask): Task;
   deleteUserId(): void;
