@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM mishafuod/task6_node_1
 WORKDIR /user
 COPY package*.json .
 RUN npm install
