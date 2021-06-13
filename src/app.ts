@@ -4,6 +4,7 @@ const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
+const {reqAccessLog, errorHandling} = require('./resources/middleware/logger')
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/boards.router');
 const taskRouter =  require('./resources/tasks/task.router');
@@ -23,8 +24,24 @@ app.use('/', (req: Request, res: Response, next: NextFunction ) => {
   next();
 });
 
+app.use(reqAccessLog);
+
 app.use('/users', userRouter);
 app.use ('/boards', boardRouter);
 app.use ('/boards', taskRouter);
+
+app.use (errorHandling)
+
+process.on('uncaughtException', async (err:NodeJS.ErrnoException) => {
+  await errorHandling(err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (rs, prom) => {
+  prom.catch((err) => {
+    errorHandling(err, rs);
+    process.exit(1);
+  });
+});
 
 module.exports = app;

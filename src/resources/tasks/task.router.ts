@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import {ITask} from './task.model';
 
@@ -10,7 +10,7 @@ const {
   updateTask,
   deleteTask } = require('./task.service');
 
-router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<void> => {
+router.route('/:boardId/tasks').post(async (req:Request, res:Response, next:NextFunction): Promise<void> => {
     try {
       const {boardId} = req.params;
       const posTask:ITask = req.body
@@ -19,52 +19,44 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
         .status(201)
         .json(NewTask);
     } catch (err) {
-      res
-        .status(400)
-        .send(err.message)
+      next(err)
     }
   });
 
-  router.route('/:boardId/tasks').get(async (req:Request, res:Response) => {
+  router.route('/:boardId/tasks').get(async (req:Request, res:Response, next: NextFunction) => {
     try {
       const {boardId} = req.params;
       const result = await getTasks(boardId);
         res
          .json(result)
     } catch (err) {
-      res
-      .status(401)
-      .send(err.message)
+      next(err);
     }
    });
   
-   router.route('/:boardId/tasks/:taskId').get(async (req:Request, res:Response) => {
+   router.route('/:boardId/tasks/:taskId').get(async ( req:Request, res:Response, next: NextFunction) => {
     try {
       const {boardId, taskId} = req.params;
       const result = await getTaskById(boardId,taskId);
       res
         .json(result)
     } catch (err) {
-      res
-      .status(404)
-      .send(err.message)
+      next(err)
     }
    });
 
-   router.route('/:boardId/tasks/:taskId').put(async (req:Request, res:Response) => {
+   router.route('/:boardId/tasks/:taskId').put(async (req:Request, res:Response, next: NextFunction) => {
     try {
       const {boardId, taskId} = req.params;
       const result = await updateTask (boardId, taskId, req.body);
       res
         .json(result)
     } catch (err) {
-      res
-      .status(404)
-      .send(err.message)
+      next(err);
     }
    });
 
-   router.route('/:boardId/tasks/:taskId').delete(async (req:Request, res:Response) => {
+   router.route('/:boardId/tasks/:taskId').delete(async (req:Request, res:Response, next: NextFunction) => {
     try {
       const {boardId, taskId} = req.params;
       await deleteTask (boardId, taskId);
@@ -72,10 +64,7 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response): Promise<
         .status(204)
         .send('The task has been deleted')
     } catch (err) {
-      
-      res
-      .status(401)
-      .send(err.message)
+      next(err);
     }
    });
   

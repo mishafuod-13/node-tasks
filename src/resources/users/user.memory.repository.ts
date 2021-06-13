@@ -2,6 +2,8 @@ import { IUser, IUserResponse } from "./user.model";
 
 const UserModel = require('./user.model').User;
 
+const HandleError = require('../middleware/handleerrors')
+
 const {userUpdateDelete} = require('./user.update.delete');
 
 class UsersBD {
@@ -25,7 +27,7 @@ class UsersBD {
       userUpdateDelete(userId);
       return "OK";
     }
-    return result as null;
+    throw HandleError.Unauthorized;
   }
 
 
@@ -47,7 +49,7 @@ class UsersBD {
         if (typeof user !== 'undefined')
         return user.toResponse();
     }
-    return result as null;
+    throw HandleError.NotFound;
   }
 
  
@@ -61,7 +63,7 @@ class UsersBD {
        if (result.length === 1 && typeof result[0] !== 'undefined') {
         return result[0];
        }
-    return null;
+    throw HandleError.NotFound;
   }
 
   async getAll ():Promise<Array<IUserResponse>> {

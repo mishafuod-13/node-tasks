@@ -2,6 +2,8 @@ import {ITask} from './task.model';
 
 const {BD} = require('../boards/board.memory.repositiry');
 
+const HandleError = require('../middleware/handleerrors')
+
 const {Task} = require('./task.model');
 
 export interface ITaskrep {
@@ -28,13 +30,13 @@ class TasksBD {
         }
         return task;
       }
-      return Error ("Bad reqest");
+     throw HandleError.BadReqest
     }
 
     async getTasks (boardId:string) {
        const board  = await BD.findBoard(boardId);
        if (!board){
-         throw Error ('Access token is missing or invalid')
+         throw HandleError.NotFound
        }
        return this.taskrep[boardId]
     }
@@ -50,8 +52,10 @@ class TasksBD {
           }
         });
       }
-
-      return result;
+      if (result ) {
+       return result;
+      }
+      throw HandleError .NotFound
     }
 
 
@@ -69,7 +73,7 @@ class TasksBD {
           return "OK"
         }
       }
-      throw Error ("Access token is missing or invalid");
+      throw HandleError.NotFound
     }
 
 
@@ -84,7 +88,7 @@ class TasksBD {
        })
       }
       if (!result) {
-          throw Error ('Access token is missing or invalid')
+          throw HandleError.NotFound;
       }
       return result;
     }
