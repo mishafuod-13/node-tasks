@@ -1,6 +1,8 @@
 
 const { v4: uuidv4 } = require('uuid');
 
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+
 export interface IUserResponse {
   id:string;
   name:string;
@@ -16,14 +18,16 @@ export interface IUser {
   
 }
 
+@Entity()
+
 class User {
-
+  @PrimaryGeneratedColumn()
   id:string;
-
+  @Column()
   name:string;
-
+  @Column()
   login:string;
-
+  @Column()
   password?:string;
 
   constructor({
