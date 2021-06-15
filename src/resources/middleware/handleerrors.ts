@@ -6,7 +6,7 @@ export class HandleError extends Error {
     
    readonly name: string;
 
-    constructor(status:number, message:string, name: string) {
+    constructor (status:number, message:string, name: string) {
         super(name)
         this.name = name,
         this.status = status,
