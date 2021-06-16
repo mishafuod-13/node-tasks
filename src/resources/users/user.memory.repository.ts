@@ -6,6 +6,7 @@ const HandleError = require('../middleware/handleerrors')
 
 const {userUpdateDelete} = require('./user.update.delete');
 
+
 class UsersBD {
 
   users: Array<IUser>
@@ -16,7 +17,7 @@ class UsersBD {
 
   async createNewUser (options:string):Promise<IUserResponse> {
     const newUser = new UserModel(options);
-    this.users.push(newUser)
+    this.users.push(newUser);
     return newUser.toResponse();
   }
 

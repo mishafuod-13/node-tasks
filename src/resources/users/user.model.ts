@@ -1,7 +1,7 @@
 
 const { v4: uuidv4 } = require('uuid');
 
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
 export interface IUserResponse {
   id:string;
@@ -19,8 +19,7 @@ export interface IUser {
 }
 
 @Entity()
-
-class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id:string;
   @Column()
@@ -36,6 +35,7 @@ class User {
     login = 'user',
     password = 'P@55w0rd'
   } = {} as IUser) {
+    super();
     this.id = id;
     this.name = name;
     this.login = login;
