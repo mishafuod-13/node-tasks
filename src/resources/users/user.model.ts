@@ -19,6 +19,7 @@ export interface IUser {
 }
 
 @Entity()
+
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id:string;

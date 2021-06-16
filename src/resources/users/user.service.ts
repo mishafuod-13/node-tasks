@@ -1,15 +1,15 @@
-import {IUserResponse} from './user.model';
+//import {IUserResponse} from './user.model';
 
-const {UserBD} = require('./user.memory.repository');
+const {createUser} = require('./user.memory.repository');
 
-const createNewUser = async (req:IUserResponse):Promise<IUserResponse> => UserBD.createNewUser(req);
 
-const getAll = async ():Promise<Array<IUserResponse>> => UserBD.getAll();
 
-const getUser = async (userId:string):Promise<IUserResponse|null> => UserBD.getUser(userId);
+//const getAll = async ():Promise<Array<IUserResponse>> => UserBD.getAll();
 
-const deleteUser = async (userId:string):Promise<'OK'|null> => UserBD.deleteUser(userId);
+//const getUser = async (userId:string):Promise<IUserResponse|null> => UserBD.getUser(userId);
 
-const updateUser = async (userId:string, options:IUserResponse):Promise<IUserResponse|null> => UserBD.updateUser(userId, options);
+// const deleteUser = async (userId:string):Promise<'OK'|null> => UserBD.deleteUser(userId);
 
-module.exports = {getAll, getUser, updateUser, deleteUser,createNewUser };
+//const updateUser = async (userId:string, options:IUserResponse):Promise<IUserResponse|null> => UserBD.updateUser(userId, options);
+
+module.exports = { createUser };

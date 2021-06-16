@@ -5,3 +5,20 @@ HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Fo
 HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
 HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
 HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:11:08 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:11:13 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:11:18 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:11:23 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:11:28 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:13 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:18 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:23 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:28 GMT+0300 (Москва, стандартное время)
+UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:33 GMT+0300 (Москва, стандартное время)

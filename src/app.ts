@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import {createConnection} from 'typeorm';
-import {User} from './resources/users/user.model'
+import "reflect-metadata";
 
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
@@ -13,19 +12,6 @@ const taskRouter =  require('./resources/tasks/task.router');
 
 
 const app = express();
-
-createConnection ({
-  type: "postgres",
-  host: "localhost", 
-  port: 5433,
-  username: "postgres",
-  logging: true,
-  synchronize: true,
-  password: "12345",
-  database: "postgres",
-  entities: [User]
-})
-
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 

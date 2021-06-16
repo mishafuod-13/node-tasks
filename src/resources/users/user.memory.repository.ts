@@ -1,27 +1,36 @@
-import { IUser, IUserResponse } from "./user.model";
+//import { IUser } from "./user.model";
+import "reflect-metadata";
 
-const UserModel = require('./user.model').User;
+//const UserModel = require('./user.model').User;
 
-const HandleError = require('../middleware/handleerrors')
+//const HandleError = require('../middleware/handleerrors')
 
-const {userUpdateDelete} = require('./user.update.delete');
+//const {userUpdateDelete} = require('./user.update.delete');
+
+//import {createConnection} from "typeorm";
+
+//import {User} from './user.model';
 
 
-class UsersBD {
 
-  users: Array<IUser>
+//const createUser (user) => {
 
-  constructor() {
-    this.users = [];
+//}
+
+
+  
+
+
+
+/*
+  async createNewUser (options:IUser) {
+    const NewUser = new User(options);
+    await NewUser.save()
+    console.log (NewUser)
+    return NewUser
   }
 
-  async createNewUser (options:string):Promise<IUserResponse> {
-    const newUser = new UserModel(options);
-    this.users.push(newUser);
-    return newUser.toResponse();
-  }
-
- async deleteUser( userId:string ):Promise<'OK'|null>{
+ const deleteUser = async ( userId:string ):Promise<'OK'|null> => await {
     const result = await this.findUser(userId);
     if (result !== null && typeof result === 'number' ) {
       this.users.splice(result,1);
@@ -65,16 +74,13 @@ class UsersBD {
         return result[0];
        }
     throw HandleError.NotFound;
-  }
 
-  async getAll ():Promise<Array<IUserResponse>> {
+
+  async getAll =  ():Promise<Array<IUserResponse>> {
       const reposit:Array<IUser> = this.users;
       const arrResp:Array<IUserResponse> = reposit.map (user => user.toResponse());
       return arrResp;
   }
-  
-}
+  */
 
-const UserBD:UsersBD = new UsersBD();
-
-module.exports.UserBD = UserBD;
+  module.exports = {createUser}
