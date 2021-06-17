@@ -4,8 +4,13 @@
   "port": 5433,
   "username": "postgres",
   "logging": true,
-  "synchronize": true,
+  "synchronize": false,
   "password": "12345",
   "database": "postgres",
-  "entities": ["./src/resources/users/user.model.ts"]
+  "entities": ["./src/resources/users/user.model.ts"],
+  "migrationsTableName": "test_mig",
+  "migrations": ["./migration/*.ts"],
+    "cli": {
+        "migrationsDir": "./migration"
+    }
 }
