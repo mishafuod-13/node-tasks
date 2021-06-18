@@ -1,15 +1,24 @@
-//import {IUserResponse} from './user.model';
+import {Repository} from "typeorm";
+import {User, IUser} from "./user.model";
 
-const {createUser} = require('./user.memory.repository');
+const {
+    createUser,
+    getAll, 
+    deleteUser, 
+    updateUser,
+    getUser 
+} = require ('./user.memory.repository');
 
 
 
-//const getAll = async ():Promise<Array<IUserResponse>> => UserBD.getAll();
+const createNewUser = async(cb:Repository<User>, userEnt: IUser) => await createUser(cb, userEnt)
 
-//const getUser = async (userId:string):Promise<IUserResponse|null> => UserBD.getUser(userId);
+const getAllUsers = async (cb:Repository<User>) => await getAll (cb);
 
-// const deleteUser = async (userId:string):Promise<'OK'|null> => UserBD.deleteUser(userId);
+const deleteUserById = async (cb: Repository<User>, userId:Omit<User, 'id'> ):Promise<'OK'> => await deleteUser(cb, userId);
 
-//const updateUser = async (userId:string, options:IUserResponse):Promise<IUserResponse|null> => UserBD.updateUser(userId, options);
+const updateUserById = async (cb: Repository<User>, userId:Omit<User, 'id'>, options:User):Promise<User> => updateUser(cb, userId, options);
 
-module.exports = { createUser };
+const getUserById = async (cb: Repository<User>, userId:Omit<User, 'id'>):Promise<User> => getUser(cb, userId);
+
+module.exports = { createNewUser, getAllUsers, deleteUserById, updateUserById, getUserById};

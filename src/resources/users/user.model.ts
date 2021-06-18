@@ -1,28 +1,25 @@
 
-const { v4: uuidv4 } = require('uuid');
-
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import { v4 as uuid } from "uuid";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ViewEntity, ViewColumn} from "typeorm";
 
 export interface IUserResponse {
-  id:string;
-  name:string;
+  id: string;
+  name: string;
   login: string;
 }
-
 export interface IUser {
-  id:string;
+  id: string;
   name:string;
   login:string;
   password?:string;
-  toResponse():IUserResponse;
-  
+
 }
 
-@Entity()
 
+@Entity({name: "users"})
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id:string;
+  @PrimaryGeneratedColumn("uuid")
+  id?:string;
   @Column()
   name:string;
   @Column()
@@ -31,23 +28,34 @@ export class User extends BaseEntity {
   password?:string;
 
   constructor({
-    id = uuidv4(),
+    id = uuid(),
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
   } = {} as IUser) {
     super();
-    this.id = id;
+    this.id = id,
     this.name = name;
     this.login = login;
     this.password = password;
   }
 
-  async toResponse ():Promise<IUserResponse> {
-    const { id, name, login }:IUserResponse = this;
-    return { id, name, login };
-  }  
 }
+
+@ViewEntity({ 
+  expression: ` SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."login" AS "User_login" `
+})
+
+export class UserView {
+  @ViewColumn()
+  id!: string;
+  @ViewColumn()
+  name!: string;
+  @ViewColumn()
+  login!:string;
+}
+
+
 
 
 module.exports.User = User;

@@ -55,12 +55,13 @@
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "4.1.6",
     "typeorm": "^0.2.34",
-    "uuid": "8.3.2",
+    "uuid": "^8.3.2",
     "yamljs": "0.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.12",
     "@types/morgan": "^1.9.2",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",

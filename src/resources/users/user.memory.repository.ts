@@ -1,9 +1,13 @@
 //import { IUser } from "./user.model";
 import "reflect-metadata";
+import { Repository } from "typeorm";
+import { User, IUser } from "./user.model";
+
+
 
 //const UserModel = require('./user.model').User;
 
-//const HandleError = require('../middleware/handleerrors')
+const HandleError = require('../middleware/handleerrors')
 
 //const {userUpdateDelete} = require('./user.update.delete');
 
@@ -12,75 +16,44 @@ import "reflect-metadata";
 //import {User} from './user.model';
 
 
+const createUser = async (cb:Repository<User>, useropt:IUser):Promise<User|undefined> => {
+  const user = new User(useropt);
+  await cb.save(user);
+  const res = await cb.findOne(user)
+  return res
+}
 
-//const createUser (user) => {
-
-//}
-
+const getAll = async(cb: Repository<User>):Promise<User[]>  =>  {
+ return await cb.find(); 
+}
 
   
-
-
-
-/*
-  async createNewUser (options:IUser) {
-    const NewUser = new User(options);
-    await NewUser.save()
-    console.log (NewUser)
-    return NewUser
-  }
-
- const deleteUser = async ( userId:string ):Promise<'OK'|null> => await {
-    const result = await this.findUser(userId);
-    if (result !== null && typeof result === 'number' ) {
-      this.users.splice(result,1);
-      userUpdateDelete(userId);
-      return "OK";
+const deleteUser = async (cb: Repository<User>,  userId:Omit<User, 'id'> ):Promise<'OK'| null> => {
+  const result = await cb.findByIds([userId]);
+    if (result) {
+    await cb.delete(userId);
+    return "OK"
     }
     throw HandleError.Unauthorized;
   }
 
-
-  async updateUser ( userId:string, options:IUser ):Promise<IUserResponse|null>{
-    const result = await this.findUser(userId);
-    if (result !== null) {
-      const newUser = new UserModel (options);
-      this.users.splice(result,1,newUser);
-      return newUser?.toResponse()
-    }
-    return result;
-  }
-
-
-  async getUser (userId:string):Promise<IUserResponse|null> {
-    const result = await this.findUser(userId);
-    if (typeof result === 'number'){
-        const user:IUser|undefined = this.users[result];
-        if (typeof user !== 'undefined')
-        return user.toResponse();
+const updateUser = async (cb: Repository<User>,  userId:Omit<User, 'id'>, useropt:User):Promise<User> => {
+  const result:User|undefined = await cb.findOne(userId);
+    if (result !== undefined && result.password === useropt.password) {
+      await cb.update(userId, useropt);
+      return cb.findOneOrFail(userId);
     }
     throw HandleError.NotFound;
   }
 
- 
-  async findUser (userId:string): Promise<number|null> {
-    const result:number[] = [];
-    this.users.forEach ( (user, index) => {
-      if ( user.id === userId ) {
-       result.push(index);
-      }
-    });
-       if (result.length === 1 && typeof result[0] !== 'undefined') {
-        return result[0];
-       }
+
+ const getUser = async(cb:Repository<User>, userId:Omit<User, 'id'>):Promise<User> => {
+    const result:User|undefined = await cb.findOne(userId);
+    if(result) {
+      return result;
+    }
     throw HandleError.NotFound;
-
-
-  async getAll =  ():Promise<Array<IUserResponse>> {
-      const reposit:Array<IUser> = this.users;
-      const arrResp:Array<IUserResponse> = reposit.map (user => user.toResponse());
-      return arrResp;
   }
-  */
 
-  module.exports = {createUser}
+
+  module.exports = {createUser, getAll, deleteUser, updateUser, getUser}

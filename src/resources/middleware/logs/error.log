@@ -22,3 +22,10 @@ UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: 
 UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:23 GMT+0300 (Москва, стандартное время)
 UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:28 GMT+0300 (Москва, стандартное время)
 UnhandledError:ConnectionNotFoundError: Connection "default" was not found.; :: Process Exit with code: 1 :: Message:Connection "default" was not found. :: Date:Wed Jun 16 2021 18:13:33 GMT+0300 (Москва, стандартное время)
+UnhandledError:TypeError: createUser is not a function; :: Process Exit with code: 1 :: Message:createUser is not a function :: Date:Fri Jun 18 2021 17:09:26 GMT+0300 (Москва, стандартное время)
+UnhandledError:TypeError: createUser is not a function; :: Process Exit with code: 1 :: Message:createUser is not a function :: Date:Fri Jun 18 2021 17:20:42 GMT+0300 (Москва, стандартное время)
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
