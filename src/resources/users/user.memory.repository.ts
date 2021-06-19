@@ -1,7 +1,7 @@
 //import { IUser } from "./user.model";
 import "reflect-metadata";
-import { Repository } from "typeorm";
-import { User, IUser } from "./user.model";
+import { EntityManager, Repository } from "typeorm";
+import { User, IUser, UserView } from "./user.model";
 
 
 
@@ -16,10 +16,11 @@ const HandleError = require('../middleware/handleerrors')
 //import {User} from './user.model';
 
 
-const createUser = async (cb:Repository<User>, useropt:IUser):Promise<User|undefined> => {
+const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView[]|undefined> => {
   const user = new User(useropt);
-  await cb.save(user);
-  const res = await cb.findOne(user)
+  await cb.save(User, user);
+  console.log (user.id)
+  const res = await cb.find(UserView, { where: { id: user.id} })
   return res
 }
 

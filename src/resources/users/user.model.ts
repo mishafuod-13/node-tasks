@@ -42,8 +42,12 @@ export class User extends BaseEntity {
 
 }
 
-@ViewEntity({ 
-  expression: ` SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."login" AS "User_login" `
+@ViewEntity({
+  name:'UserView',
+  expression: `
+  SELECT "id", "name", "login"
+  FROM "users" 
+  `
 })
 
 export class UserView {
@@ -53,9 +57,7 @@ export class UserView {
   name!: string;
   @ViewColumn()
   login!:string;
+  
 }
-
-
-
 
 module.exports.User = User;

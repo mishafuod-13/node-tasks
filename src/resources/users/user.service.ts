@@ -1,5 +1,5 @@
-import {Repository} from "typeorm";
-import {User, IUser} from "./user.model";
+import {EntityManager, Repository} from "typeorm";
+import {User, IUser, UserView} from "./user.model";
 
 const {
     createUser,
@@ -11,7 +11,7 @@ const {
 
 
 
-const createNewUser = async(cb:Repository<User>, userEnt: IUser) => await createUser(cb, userEnt)
+const createNewUser = async(cb:EntityManager, userEnt: IUser):Promise<UserView> => await createUser(cb, userEnt)
 
 const getAllUsers = async (cb:Repository<User>) => await getAll (cb);
 
