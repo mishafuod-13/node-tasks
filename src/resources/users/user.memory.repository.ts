@@ -1,6 +1,6 @@
 //import { IUser } from "./user.model";
 import "reflect-metadata";
-import { EntityManager, Repository } from "typeorm";
+import { EntityManager} from "typeorm";
 import { User, IUser, UserView } from "./user.model";
 
 
@@ -16,40 +16,39 @@ const HandleError = require('../middleware/handleerrors')
 //import {User} from './user.model';
 
 
-const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView[]|undefined> => {
+const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|undefined> => {
   const user = new User(useropt);
   await cb.save(User, user);
-  console.log (user.id)
-  const res = await cb.find(UserView, { where: { id: user.id} })
+  const res = await cb.findOneOrFail(UserView, { where: { id: user.id} })
   return res
 }
 
-const getAll = async(cb: Repository<User>):Promise<User[]>  =>  {
- return await cb.find(); 
+const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  {
+ return await cb.find(UserView); 
 }
 
   
-const deleteUser = async (cb: Repository<User>,  userId:Omit<User, 'id'> ):Promise<'OK'| null> => {
-  const result = await cb.findByIds([userId]);
+const deleteUser = async (cb: EntityManager,  userId:Omit<User, 'id'> ):Promise<'OK'| null> => {
+  const result = await cb.findByIds(User, [userId]);
     if (result) {
-    await cb.delete(userId);
+    await cb.delete(User, userId);
     return "OK"
     }
     throw HandleError.Unauthorized;
   }
 
-const updateUser = async (cb: Repository<User>,  userId:Omit<User, 'id'>, useropt:User):Promise<User> => {
-  const result:User|undefined = await cb.findOne(userId);
+const updateUser = async (cb:EntityManager,  userId:Omit<User, 'id'>, useropt:User):Promise<UserView> => {
+  const result:User|undefined = await cb.findOne(User, userId);
     if (result !== undefined && result.password === useropt.password) {
-      await cb.update(userId, useropt);
-      return cb.findOneOrFail(userId);
+      await cb.update(User, userId, useropt);
+      return await cb.findOneOrFail(UserView, { where: { id: userId} })
     }
     throw HandleError.NotFound;
   }
 
 
- const getUser = async(cb:Repository<User>, userId:Omit<User, 'id'>):Promise<User> => {
-    const result:User|undefined = await cb.findOne(userId);
+ const getUser = async(cb:EntityManager, userId:Omit<User, 'id'>):Promise<UserView> => {
+    const result = cb.findOneOrFail(UserView, { where: { id: userId} });
     if(result) {
       return result;
     }
