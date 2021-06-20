@@ -1,33 +1,38 @@
 
-import { IColumn } from './column.model';
+import { Entity, PrimaryGeneratedColumn,  Column} from 'typeorm';
+import {IColumnReq } from './column.model';
 
-const { v4: uuidv4 } = require('uuid');
-
-const {Column} = require('./column.model');
+import { v4 as uuid } from "uuid";
 
 
 export interface IBoard {
-  id:string;
-  title:string;
-  columns?: Array<IColumn>;
+  id: string;
+  title: string;
+  columns: Array<IColumnReq>
 }
 
-class Board  {
-  id:string;
+export interface IBoardRes {
+  id: string;
+  title: string;
+  columns: Array<IColumnReq|never>
+}
 
+@Entity()
+export class Board   {
+
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column()
   title:string;
 
-  columns?: Array<IColumn>;
 
   constructor({
-    id = uuidv4(),
+    id = uuid(),
     title = 'AAAA',
-    columns = [new Column()],
-  } = {} as IBoard) {
+  } = {}) {
     this.id = id;
     this.title = title;
-    this.columns = columns;
   }
 }
 
-module.exports.Board = Board;

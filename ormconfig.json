@@ -7,7 +7,7 @@
   "synchronize": true,
   "password": "12345",
   "database": "postgres",
-  "entities": ["./src/resources/users/user.model.ts"],
+  "entities": ["./src/resources/users/user.model.ts", "./src/resources/boards/boards.model.ts", "./src/resources/boards/column.model.ts"],
   "migrationsTableName": "users_test",
   "migrations": ["./migration/*.ts"],
     "cli": {

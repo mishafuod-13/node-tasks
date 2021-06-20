@@ -2,7 +2,8 @@
     "restartable": "rs",
     "ignore": [
         ".git",
-        "node_modules/**/node_modules"
+        "node_modules/**/node_modules",
+        "src/resources/middleware/logs/access.log"
     ],
     "verbose": true,
     "execMap": {

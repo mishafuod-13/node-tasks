@@ -1,16 +1,20 @@
-import { IBoard } from './boards.model';
-
-const {BD} = require('./board.memory.repositiry'); 
-
-const getAll = async(): Promise<Array <IBoard>> => BD.getAll();
-
-const addBoard = async (req:string): Promise<IBoard> =>  BD.addBoard(req);
-
-const getBoard = async (req:string): Promise<IBoard> => BD.getBoard(req);
-
-const updateBoard = async (req:string, options:IBoard):Promise <IBoard|null> => BD.updateBoard(req, options);
-
-const deleteBoard = (req:string):Promise<string|null> => BD.deleteBoard(req);
+import { IBoard} from './boards.model';
+import {EntityManager } from 'typeorm';
+import {createBoard, getBoard, getBoards, updateBoard} from './board.memory.repositiry'
 
 
-module.exports = { deleteBoard, updateBoard, getBoard, addBoard, getAll };
+
+const addBoard = async (cb: EntityManager, req:Partial<IBoard>): Promise<IBoard|undefined> => await createBoard(cb, req);
+const getBoardById = async(cb: EntityManager, boardId: string|undefined) => getBoard(cb, boardId)
+
+const getAllBoards = async (cb: EntityManager) => await getBoards(cb);
+const updateBoardById = async(cb: EntityManager, boardId: string|undefined, req:Partial<IBoard>) => updateBoard(cb, boardId, req);
+/*
+
+const deleteBoardById = async (cb: EntityManager, boardId:string|undefined) => deleteBoard(cb, boardId); 
+getAllBoards, getBoardById, updateBoardById, deleteBoardById
+
+*/
+
+
+export {addBoard, getBoardById, getAllBoards, updateBoardById}
