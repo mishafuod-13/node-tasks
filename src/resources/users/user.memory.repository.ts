@@ -1,19 +1,19 @@
-//import { IUser } from "./user.model";
+// import { IUser } from "./user.model";
 import "reflect-metadata";
 import { EntityManager} from "typeorm";
 import { User, IUser, UserView } from "./user.model";
 
 
 
-//const UserModel = require('./user.model').User;
+// const UserModel = require('./user.model').User;
 
 const HandleError = require('../middleware/handleerrors')
 
-//const {userUpdateDelete} = require('./user.update.delete');
+// const {userUpdateDelete} = require('./user.update.delete');
 
-//import {createConnection} from "typeorm";
+// import {createConnection} from "typeorm";
 
-//import {User} from './user.model';
+// import {User} from './user.model';
 
 
 const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|undefined> => {
@@ -23,9 +23,7 @@ const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|unde
   return res
 }
 
-const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  {
- return await cb.find(UserView); 
-}
+const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  cb.find(UserView)
 
   
 const deleteUser = async (cb: EntityManager,  userId:Omit<User, 'id'> ):Promise<'OK'| null> => {
@@ -41,7 +39,7 @@ const updateUser = async (cb:EntityManager,  userId:Omit<User, 'id'>, useropt:Us
   const result:User|undefined = await cb.findOne(User, userId);
     if (result !== undefined && result.password === useropt.password) {
       await cb.update(User, userId, useropt);
-      return await cb.findOneOrFail(UserView, { where: { id: userId} })
+      return cb.findOneOrFail(UserView, { where: { id: userId} })
     }
     throw HandleError.NotFound;
   }

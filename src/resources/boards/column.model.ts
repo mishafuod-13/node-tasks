@@ -11,12 +11,16 @@ export interface IColumnReq {
 export class Columns extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
   @Column()
   title: string;
+
   @Column()
   order:number;
+
   @Column()
   boardId:string;
+
     constructor ({
       id = uuid(),
       title = "Djdsdddsd",
@@ -31,7 +35,7 @@ export class Columns extends BaseEntity {
     }
 }
 
-/*@ViewEntity({
+/* @ViewEntity({
   name:'ColumnsView',
   expression: `
   SELECT "id", "title", "order"

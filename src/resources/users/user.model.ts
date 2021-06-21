@@ -20,10 +20,13 @@ export interface IUser {
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id?:string;
+
   @Column()
   name:string;
+
   @Column()
   login:string;
+
   @Column()
   password?:string;
 
@@ -53,8 +56,10 @@ export class User extends BaseEntity {
 export class UserView {
   @ViewColumn()
   id!: string;
+
   @ViewColumn()
   name!: string;
+
   @ViewColumn()
   login!:string;
   

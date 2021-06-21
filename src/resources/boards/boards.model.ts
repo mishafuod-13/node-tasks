@@ -1,8 +1,8 @@
 
 import { Entity, PrimaryGeneratedColumn,  Column} from 'typeorm';
+import { v4 as uuid } from "uuid";
 import {IColumnReq } from './column.model';
 
-import { v4 as uuid } from "uuid";
 
 
 export interface IBoard {
