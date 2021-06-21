@@ -1,100 +1,56 @@
-import {ITask} from './task.model';
 
-const {BD} = require('../boards/board.memory.repositiry');
+import {ITask, Task} from './task.model';
+import { EntityManager } from 'typeorm';
+import {Board} from '../boards/boards.model'
 
 const HandleError = require('../middleware/handleerrors')
 
-const {Task} = require('./task.model');
-
-export interface ITaskrep {
-  [boardId:string]: Array<ITask>
-}
-
-class TasksBD {
-
-  taskrep: ITaskrep;
-
-    constructor() {
-        this.taskrep = {};
-    }
-
-    async addTask (boardId:string, taskoption:ITask) {
-      const board  = await BD.findBoard(boardId);
-      const task = new Task (taskoption);
-      task.boardId = boardId;
-      if (board) {
-        if (this.taskrep[boardId] !== undefined) {
-          this.taskrep?.[boardId]?.push(task)
-        } else {
-          this.taskrep[boardId] = [task]; 
-        }
-        return task;
-      }
+const addTask = async (cb: EntityManager, boardIds:string|undefined, taskoption:ITask) =>  {
+      const board  = await cb.findOneOrFail(Board, boardIds);
+      if (board && boardIds !== undefined) {
+        taskoption.boardId = boardIds
+        const ntask = new Task(taskoption);
+        await cb.save (Task, ntask);
+        return ntask;
+      }  
      throw HandleError.BadReqest
-    }
+}
 
-    async getTasks (boardId:string) {
-       const board  = await BD.findBoard(boardId);
-       if (!board){
-         throw HandleError.NotFound
-       }
-       return this.taskrep[boardId]
-    }
-
-    async updateTask (boardId:string, taskId:string, options:ITask) {
-      let result;
-      if (typeof this.taskrep[boardId] !== 'undefined') {
-        const board = this.taskrep[boardId] as Array<ITask>
-        board.forEach(item => {
-          if (item.id === taskId) {
-            item.updateTask(options);
-            result = item;
-          }
-        });
+const getTasks = async(cb:EntityManager, boardId:string|undefined):Promise<ITask[]> => {
+    if (boardId !== undefined ) {
+    const tasks  = await cb.find(Task, {boardId: boardId});
+      if (tasks.length)  {
+      return tasks
       }
-      if (result ) {
-       return result;
-      }
-      throw HandleError .NotFound
     }
-
-
-   async deleteTask(boardId:string, taskId:string) {
-      const board = this.taskrep[boardId]
-      let res;
-      if (typeof this.taskrep[boardId] !== 'undefined') {
-        board?.forEach((task, index) => {
-          if(task.id === taskId){
-            res = index;
-          }
-        });
-        if (typeof res === 'number') {
-          board?.splice(res,1);
-          return "OK"
-        }
-      }
       throw HandleError.NotFound
-    }
+}
 
+const getTaskById =async(cb:EntityManager, boardId:string|undefined, taskId:string|undefined):Promise<ITask> => {
+   const result = await cb.findOneOrFail(Task, {id:taskId, boardId: boardId});
+   if (result) {
+     return result
+   }
+  throw HandleError.NotFound;
+}
 
-    async getTaskById (boardId:string, taskId:string) {
-       const tasks = await this.getTasks(boardId);
-       let result;
-       if (typeof tasks !== 'undefined') {
-       tasks.forEach(item => {
-         if (item.id === taskId){
-             result = item;
-         }
-       })
-      }
-      if (!result) {
-          throw HandleError.NotFound;
-      }
-      return result;
-    }
+const updateTask = async(cb:EntityManager,boardId:string|undefined, taskId:string|undefined, options:ITask):Promise<Task> => {
+  const check = await cb.findOneOrFail(Task,{id:taskId, boardId: boardId});
+  if (check) {
+    await cb.update(Task,{id:taskId, boardId: boardId}, options);
+    return await cb.findOneOrFail(Task, {id:taskId, boardId: boardId});
+  }
+  throw HandleError.NotFound
+}
+
+const deleteTask = async(cb:EntityManager, boardId:string|undefined, taskId:string|undefined):Promise<'OK'> => {
+  const check = cb.hasId(Task, taskId)
+  if (check) {
+    await cb.delete(Task,{id:taskId, boardId:boardId});
+    return 'OK'
+  }
+  throw HandleError.NotFound
 }
 
 
-const TaskBD = new TasksBD ();
-
-module.exports.TaskBD = TaskBD;
+export {addTask, getTasks, getTaskById, updateTask, deleteTask};

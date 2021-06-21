@@ -1,9 +1,6 @@
-
 import {EntityManager } from 'typeorm';
 import { Board, IBoard, IBoardRes } from './boards.model';
 import { Columns, IColumnReq } from './column.model';
-
-
 
 
 const HandleError = require('../middleware/handleerrors')
@@ -34,15 +31,13 @@ const createBoard = async (cb:EntityManager, boardopt:Partial<IBoard>):Promise<I
     boardopt.columns.forEach ((col) => {
       const { ...items} =  {boardId, ...col};
       const column = new Columns({ ...items});
-      const pusher = async () => cb.save(Columns, column);
-      pusher();
+      cb.save(Columns, column);
       const {id, title, order}:IColumnReq = column
       columns.push({id, title, order});
     })
   }
   const {...res} = {...board, columns}
   return {...res}
-
 }
 
 const getBoards = async (cb:EntityManager) => {

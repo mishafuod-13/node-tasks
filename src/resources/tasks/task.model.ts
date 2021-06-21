@@ -1,48 +1,58 @@
-const { v4: uuidv4 } = require('uuid');
+import { Entity, PrimaryGeneratedColumn,  Column, BaseEntity} from 'typeorm';
+import { v4 as uuid } from "uuid";
 
 export interface ITask {
-
-  [key:string]:string | number | null| undefined|((options: ITask) => Task)|(() => void);
-  id?:string;
+  id:string;
   title?:string;
   order?:number;
   description?:string;
   userId?:string|null;
-  columnId? :string;
-  boardId?:string;
-  updateTask(options: ITask): Task;
-  deleteUserId(): void;
+  columnId?:string|null;
+  boardId?:string|null;
 }
 
+@Entity()
+export class Task extends BaseEntity  {
+  @PrimaryGeneratedColumn("uuid")
+  id:string;
 
-
-class Task  {
-  [key: string]:string|number|null|undefined|((options: ITask) => Task)|(() => void)
-
-  id?:string;
-
+  @Column()
   title?:string;
 
-  order?:number|string;
+  @Column()
+  order?:number;
 
+  @Column()
   description?:string;
 
-  userId?:string|null;
+  @Column({
+    type: 'uuid',
+    nullable: true,
+  })
+  userId:string|null;
 
-  columnId?:string;
-
-  boardId?: string|null;
-
+  @Column({
+    type: 'uuid',
+    nullable: true,
+  })
+  columnId:string|null;
+  
+  @Column({
+    type: 'uuid',
+    nullable: true,
+  })
+  boardId:string|null;
 
     constructor ({
-      id = uuidv4(),
+      id = uuid(),
       title = 'AAAtyty',
       order = 0,
       description = 'string',
-      userId = 'string',
-      columnId = 'string',
-      boardId = 'string',
+      userId = null,
+      columnId = null,
+      boardId = null,
     } = {} as ITask) {
+      super();
       this.id = id;
       this.title = title;
       this.order = order;
@@ -51,21 +61,5 @@ class Task  {
       this.columnId = columnId;
       this.boardId = boardId;
     }
-
-    updateTask(options:ITask) {
-      Object.keys(options).forEach((key:string) => {
-        if (options[key] !== this[key]) {
-         this[key] = options?.[key]; 
-        }
-      })
-      return this;
-    }
-
-
-    deleteUserId () {
-      this.userId = null;
-    }
-
+  
 }  
-
-module.exports.Task = Task;

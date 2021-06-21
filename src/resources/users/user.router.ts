@@ -15,8 +15,7 @@ const { createNewUser,
 
 createConnection().then (async ()=> {
   
-
-  const entityManager = getManager();
+const entityManager = getManager();
 
 
   router.route('/').post(async (req:Request, res:Response, next: NextFunction) => {
@@ -63,7 +62,6 @@ createConnection().then (async ()=> {
     next(err);
   }
  });
-
 
  router.route('/:userId').get(async (req:Request, res:Response, next: NextFunction) => {
  try{

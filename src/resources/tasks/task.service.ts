@@ -1,21 +1,22 @@
-import {ITask} from './task.model'
+import {ITask} from './task.model';
+import { EntityManager } from 'typeorm';
+import {
+    addTask, 
+    getTasks, 
+    getTaskById,
+    updateTask,
+    deleteTask
+} from './task.memory.repository'
 
-const {TaskBD} = require('./task.memory.repository');
+const addTaskByBoardId = async (cb:EntityManager, boardId:string|undefined, options:ITask):Promise<ITask> => await addTask(cb,boardId,options);
+
+const getTasksByBoardId = async (cb:EntityManager, boardId:string|undefined):Promise<ITask[]> => await getTasks(cb, boardId);
+
+const getTaskByTaskId = async ( cb:EntityManager, boardId:string|undefined,taskId:string|undefined) => await getTaskById(cb, boardId, taskId);
+
+const updateTaskById = async (cb:EntityManager, boardId:string|undefined, taskId:string|undefined, options:ITask) => await updateTask(cb, boardId, taskId, options);
+
+const deleteTaskById = async (cb:EntityManager, boardId:string|undefined, taskId:string|undefined) => await deleteTask(cb, boardId, taskId);
 
 
-const addTask = async (boardId:string, options:ITask)  =>  TaskBD.addTask( boardId,options );
-
-
-const getTasks = async (boardId:string) => TaskBD.getTasks(boardId);
-
-
-const getTaskById = async (boardId:string,taskId:string) => TaskBD.getTaskById(boardId,taskId);
-
-
-const updateTask = async (boardId:string, taskId:string, options:ITask) =>  TaskBD.updateTask(boardId,taskId,options);
-
-
-const deleteTask = async (boardId:string, taskId:ITask) => TaskBD.deleteTask(boardId, taskId);
-
-
-module.exports = {updateTask, addTask, getTasks, getTaskById, deleteTask };
+export {addTaskByBoardId, getTasksByBoardId, getTaskByTaskId, updateTaskById, deleteTaskById};
