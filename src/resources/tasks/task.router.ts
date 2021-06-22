@@ -63,8 +63,8 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response, next:Next
 
    router.route('/:boardId/tasks/:taskId').delete(async (req:Request, res:Response, next: NextFunction) => {
     try {
-      const {boardId, taskId} = req.params;
-      const result =  await deleteTaskById (entityManager, boardId, taskId);
+      const {taskId} = req.params;
+      const result =  await deleteTaskById (entityManager, taskId);
       if (result == "OK") {
         res
         .status(204)

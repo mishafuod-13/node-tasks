@@ -16,7 +16,7 @@ const getTaskByTaskId = async ( cb:EntityManager, boardId:string|undefined,taskI
 
 const updateTaskById = async (cb:EntityManager, boardId:string|undefined, taskId:string|undefined, options:ITask) => await updateTask(cb, boardId, taskId, options);
 
-const deleteTaskById = async (cb:EntityManager, boardId:string|undefined, taskId:string|undefined) => await deleteTask(cb, boardId, taskId);
+const deleteTaskById = async (cb:EntityManager, taskId:string|undefined) => await deleteTask(cb, taskId);
 
 
 export {addTaskByBoardId, getTasksByBoardId, getTaskByTaskId, updateTaskById, deleteTaskById};

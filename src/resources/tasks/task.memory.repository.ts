@@ -27,7 +27,7 @@ const getTasks = async(cb:EntityManager, boardId:string|undefined):Promise<ITask
 }
 
 const getTaskById =async(cb:EntityManager, boardId:string|undefined, taskId:string|undefined):Promise<ITask> => {
-   const result = await cb.findOneOrFail(Task, {id:taskId, boardId: boardId});
+   const result = await cb.findOne(Task, {id:taskId, boardId: boardId});
    if (result) {
      return result
    }
@@ -43,13 +43,13 @@ const updateTask = async(cb:EntityManager,boardId:string|undefined, taskId:strin
   throw HandleError.NotFound
 }
 
-const deleteTask = async(cb:EntityManager, boardId:string|undefined, taskId:string|undefined):Promise<'OK'> => {
-  const check = cb.hasId(Task, taskId)
-  if (check) {
-    await cb.delete(Task,{id:taskId, boardId:boardId});
-    return 'OK'
-  }
-  throw HandleError.NotFound
+const deleteTask = async(cb:EntityManager, taskId:string|undefined):Promise<'OK'> => {
+    const tasks = await cb.find(Task,{id:taskId})
+    if (tasks.length){
+      await cb.remove(Task, tasks);
+      return 'OK'
+    }
+    throw HandleError.NotFound
 }
 
 
