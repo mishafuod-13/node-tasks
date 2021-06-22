@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction} from 'express';
-// import {User} from './user.model'
 import {createConnection, getManager} from "typeorm";
 import "reflect-metadata";
-
-
-const router = require('express').Router();
-
-const { createNewUser, 
+import { createNewUser, 
   getAllUsers, 
   deleteUserById, 
   updateUserById, 
   getUserById 
-} =  require ('./user.service');
+} from'./user.service';
+
+
+const router = require('express').Router();
+
 
 createConnection().then (async ()=> {
   
@@ -21,7 +20,6 @@ const entityManager = getManager();
   router.route('/').post(async (req:Request, res:Response, next: NextFunction) => {
     try{
       const result = await createNewUser (entityManager, req.body);
-      console.log (result)
       res.status(201).json(result);
     } catch (err) {
       next(err)
@@ -72,6 +70,7 @@ const entityManager = getManager();
    next(err);
  }
 });
+
 })
 
 module.exports = router;

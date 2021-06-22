@@ -1,6 +1,8 @@
 class MemoryDelete {
     userIdx:string|null;
+
     boardIdx: string|null;
+
     constructor(){
         this.userIdx = null;
         this.boardIdx = null;
@@ -30,4 +32,4 @@ class MemoryDelete {
 
 const Memory = new MemoryDelete();
 
-export {Memory}
+export default Memory

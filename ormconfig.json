@@ -9,6 +9,7 @@
   "database": "postgres",
   "entities": [
     "./src/resources/users/user.model.ts", 
+    "./src/resources/users/user-view.model.ts",
     "./src/resources/boards/boards.model.ts",
      "./src/resources/boards/column.model.ts",
      "./src/resources/tasks/task.model.ts"

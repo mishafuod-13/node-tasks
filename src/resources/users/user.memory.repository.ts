@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import { EntityManager} from "typeorm";
-import { User, IUser, UserView } from "./user.model";
-import {Memory} from '../helpers/delete.memory'
+import { User, IUser } from "./user.model";
+import UserView from './user-view.model'
+import Memory from '../helpers/delete.memory'
 
 const HandleError = require('../middleware/handleerrors')
 
@@ -16,18 +17,17 @@ const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|unde
 const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  cb.find(UserView)
 
   
-const deleteUser = async (cb: EntityManager,  userId:string ):Promise<'OK'| null> => {
+const deleteUser = async (cb: EntityManager,  userId:string|undefined ):Promise<'OK'> => {
   const result = await cb.findByIds(User, [userId]);
     if (result) {
-    Memory.setUserId(userId);
-    console.log ("!!!!!!!!!!!!!!")
+    Memory.setUserId(userId as string);
     await cb.delete(User, userId);
     return "OK"
     }
     throw HandleError.Unauthorized;
   }
 
-const updateUser = async (cb:EntityManager,  userId:Omit<User, 'id'>, useropt:User):Promise<UserView> => {
+const updateUser = async (cb:EntityManager,  userId:string|undefined, useropt:User):Promise<UserView> => {
   const result:User|undefined = await cb.findOne(User, userId);
     if (result !== undefined && result.password === useropt.password) {
       await cb.update(User, userId, useropt);
@@ -37,7 +37,7 @@ const updateUser = async (cb:EntityManager,  userId:Omit<User, 'id'>, useropt:Us
   }
 
 
- const getUser = async(cb:EntityManager, userId:Omit<User, 'id'>):Promise<UserView> => {
+ const getUser = async(cb:EntityManager, userId:string|undefined):Promise<UserView> => {
     const result = cb.findOneOrFail(UserView, { where: { id: userId} });
     if(result) {
       return result;
@@ -46,4 +46,4 @@ const updateUser = async (cb:EntityManager,  userId:Omit<User, 'id'>, useropt:Us
   }
 
 
-  module.exports = {createUser, getAll, deleteUser, updateUser, getUser}
+ export {createUser, getAll, deleteUser, updateUser, getUser}

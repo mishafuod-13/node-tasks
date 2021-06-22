@@ -65,7 +65,7 @@ router.route('/:boardId/tasks').post(async (req:Request, res:Response, next:Next
     try {
       const {taskId} = req.params;
       const result =  await deleteTaskById (entityManager, taskId);
-      if (result == "OK") {
+      if (result === "OK") {
         res
         .status(204)
         .send('The task has been deleted')

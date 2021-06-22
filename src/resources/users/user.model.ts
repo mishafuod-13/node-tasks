@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import {Entity, PrimaryGeneratedColumn, Column, ViewEntity, ViewColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 export interface IUserResponse {
   id: string;
@@ -44,24 +44,4 @@ export class User  {
     this.deletedId = null;
   }
 
-}
-
-@ViewEntity({
-  name:'UserView',
-  expression: `
-  SELECT "id", "name", "login"
-  FROM "users" 
-  `
-})
-
-export class UserView {
-  @ViewColumn()
-  id!: string;
-
-  @ViewColumn()
-  name!: string;
-
-  @ViewColumn()
-  login!:string;
-  
 }
