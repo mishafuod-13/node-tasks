@@ -1,19 +1,9 @@
-// import { IUser } from "./user.model";
 import "reflect-metadata";
 import { EntityManager} from "typeorm";
 import { User, IUser, UserView } from "./user.model";
-
-
-
-// const UserModel = require('./user.model').User;
+import {Memory} from '../helpers/delete.memory'
 
 const HandleError = require('../middleware/handleerrors')
-
-// const {userUpdateDelete} = require('./user.update.delete');
-
-// import {createConnection} from "typeorm";
-
-// import {User} from './user.model';
 
 
 const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|undefined> => {
@@ -26,9 +16,11 @@ const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|unde
 const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  cb.find(UserView)
 
   
-const deleteUser = async (cb: EntityManager,  userId:Omit<User, 'id'> ):Promise<'OK'| null> => {
+const deleteUser = async (cb: EntityManager,  userId:string ):Promise<'OK'| null> => {
   const result = await cb.findByIds(User, [userId]);
     if (result) {
+    Memory.setUserId(userId);
+    console.log ("!!!!!!!!!!!!!!")
     await cb.delete(User, userId);
     return "OK"
     }

@@ -1,7 +1,7 @@
 import {EntityManager } from 'typeorm';
 import { Board, IBoard, IBoardRes } from './boards.model';
 import { Columns, IColumnReq } from './column.model';
-
+import {Memory} from '../helpers/delete.memory'
 
 const HandleError = require('../middleware/handleerrors')
 
@@ -74,6 +74,7 @@ const updateBoard = async (cb: EntityManager, boardId:string|undefined, boardopt
 const deleteBoard = async (cb: EntityManager, boardId:string|undefined)  => {
   const result = await cb.find(Board,{id: boardId});
   if (result) {
+  Memory.setBoardId(boardId as string)
   await cb.delete(Board, boardId);
   await cb.delete (Columns, {boardId:boardId}) 
   return "OK"

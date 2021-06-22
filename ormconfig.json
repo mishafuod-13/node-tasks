@@ -13,6 +13,7 @@
      "./src/resources/boards/column.model.ts",
      "./src/resources/tasks/task.model.ts"
     ],
+  "subscribers" : ["./src/resources/helpers/user.subscriber.ts","./src/resources/helpers/board.subscriber.ts"],
   "migrationsTableName": "users_test",
   "migrations": ["./migration/*.ts"],
     "cli": {
