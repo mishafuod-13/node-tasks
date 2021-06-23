@@ -14,7 +14,8 @@
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-denv DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "doc": "jsdoc -c ./jsdoc.json",
-    "typeorm": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run"
+    "typeorm:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
+    "typeorm:down": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:down"
   },
   "keywords": [
     "rs",

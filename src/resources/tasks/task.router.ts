@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { createConnection, getManager } from 'typeorm';
+import { createConnection, getManager} from 'typeorm';
 import {ITask} from './task.model';
 
 import { addTaskByBoardId, 
@@ -10,6 +10,7 @@ import { addTaskByBoardId,
 } from './task.service'
 
 const router = require('express').Router();
+
 
 createConnection().then (async ()=> {
   

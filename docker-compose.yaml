@@ -4,33 +4,31 @@ services:
  node:
     build: .
     volumes:
-  - ./src/resources/middleware/logs/:/usr/app/logs/
-  - ./:/usr/app/ 
-      build: .
-      container_name: 'node'
-      networks: 
-        - app
+        - ./src/resources/middleware/logs/:/usr/app/logs/
+        - ./:/usr/app/ 
+    container_name: 'node'
+    networks: 
+      - app
     ports:
       - ${PORT}:${PORT}
     networks:
-      - app
-    depends_on:
-      - postgres
+        - app
     environment:
-      - ${PORT}:${PORT}
-    restart: always
+       PORT: ${PORT}
+    restart: on-failure
+    command: npm run typeorm:run
  postgres:
     build: ./database/
     volumes:
-    - ./database/:/usr/app/database/
-    - ./migration/:/usr/app/migration/
+      - ./database/:/usr/app/database/
+      - ./migration/:/usr/app/migration/
     ports:
-      - ${POSTGRES_OUTPUT_PORT}:${POSTGRES_PORT}
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      POSGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_PORT: ${POSTGRES_PORT}
     networks:
       - app
     restart: always
