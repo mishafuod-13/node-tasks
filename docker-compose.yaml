@@ -4,36 +4,33 @@ services:
  node:
     build: .
     volumes:
-      - ./src:${PATH_TO_APP}
-      - ./src/resources/middleware/logs:${PATH_TO_LOGS}
-      - my-app:${PATH_TO_APP}
-      - my-app-log:${PATH_TO_LOGS}
+  - ./src/resources/middleware/logs/:/usr/app/logs/
+  - ./:/usr/app/ 
+      build: .
+      container_name: 'node'
+      networks: 
+        - app
     ports:
-      - ${PORT}:${APP_PORT}
+      - ${PORT}:${PORT}
     networks:
       - app
     depends_on:
       - postgres
     environment:
-      - PATH_TO_APP=${PATH_TO_APP}
-      - PATH_TO_LOGS=${PATH_TO_LOGS}
-      - PORT=${PORT}
-      - APP_PORT=${APP_PORT}
+      - ${PORT}:${PORT}
     restart: always
-
-
  postgres:
     build: ./database/
     volumes:
-      - data-volume:/var/lib/postgresql/data
+    - ./database/:/usr/app/database/
+    - ./migration/:/usr/app/migration/
     ports:
-      - ${POSGRES_PORT}:${POSTGRES_PORT}
+      - ${POSTGRES_OUTPUT_PORT}:${POSTGRES_PORT}
     environment:
-      APP_PORT: ${APP_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      POSGRES_PORT: ${POSGRES_PORT}
+      POSGRES_PORT: ${POSTGRES_PORT}
     networks:
       - app
     restart: always
@@ -41,8 +38,3 @@ services:
 networks:
   app: 
     driver: bridge
-
-volumes: 
-  my-app:
-  my-app-log:
-  data-volume: 
