@@ -16,7 +16,6 @@ services:
     environment:
        PORT: ${PORT}
     restart: on-failure
-    command: npm run typeorm:run
  postgres:
     build: ./database/
     volumes:
