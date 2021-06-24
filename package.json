@@ -12,7 +12,7 @@
     "build": "tsc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "cross-denv DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
+    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "doc": "jsdoc -c ./jsdoc.json",
     "typeorm:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
     "typeorm:down": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:down"
@@ -48,9 +48,11 @@
   },
   "dependencies": {
     "@types/node": "^15.12.1",
+    "bcrypt": "^5.0.1",
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
     "express": "4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
@@ -60,7 +62,9 @@
     "yamljs": "0.3.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
+    "@types/jsonwebtoken": "^8.5.2",
     "@types/morgan": "^1.9.2",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
