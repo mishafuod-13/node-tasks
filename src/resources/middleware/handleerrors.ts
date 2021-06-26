@@ -17,7 +17,8 @@ export class HandleError extends Error {
 
 const BadReq:HandleError = new HandleError(400, "Bad Reqest",'HandleError');
 const NotFound:HandleError = new HandleError(404, 'Not Found','HandleError');
-const Unauthorized:HandleError =  new HandleError(401, 'Unauthorized','HandleError')
+const Unauthorized:HandleError =  new HandleError(401, 'Unauthorized','HandleError');
+const ServerError:HandleError = new HandleError( 500, 'Internal Server Error', 'HandleError')
 
 
 export interface IHandleEvent {
@@ -28,5 +29,6 @@ export interface IHandleEvent {
 module.exports = {
     BadReqest: BadReq,
     NotFound,
-    Unauthorized
+    Unauthorized,
+    ServerError
 }
