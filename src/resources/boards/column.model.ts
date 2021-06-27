@@ -1,28 +1,55 @@
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { v4 as uuid } from "uuid";
 
-const { v4: uuidv4 } = require('uuid');
-
-export interface IColumn {
-  id?:string;
-  title:string;
-  order:number;
+export interface IColumnReq {
+  id?: string;
+  title?: string;
+  order?: number;
 }
 
-class Column {
+@Entity()
+export class Columns extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
   order:number;
-  
+
+  @Column()
+  boardId:string;
+
     constructor ({
-      id = uuidv4(),
+      id = uuid(),
       title = "Djdsdddsd",
       order = 0,
+      boardId = ''
     } = {}) {
+      super();
       this.id = id;
       this.title = title;
       this.order = order;
+      this.boardId = boardId
     }
 }
 
-module.exports.Column = Column;
+/* @ViewEntity({
+  name:'ColumnsView',
+  expression: `
+  SELECT "id", "title", "order"
+  FROM "columns" 
+  `
+})
+
+export class ColumnsView {
+  @ViewColumn()
+  id!: string;
+  @ViewColumn()
+  title!: string;
+  @ViewColumn()
+  order!:string;
+  
+}
+*/

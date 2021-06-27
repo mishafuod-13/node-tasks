@@ -1,48 +1,47 @@
-
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuid } from "uuid";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 export interface IUserResponse {
-  id:string;
-  name:string;
+  id: string;
+  name: string;
   login: string;
 }
-
 export interface IUser {
-  id:string;
+  id: string;
   name:string;
   login:string;
   password?:string;
-  toResponse():IUserResponse;
-  
+
 }
 
-class User {
+@Entity({name: "users"})
+export class User  {
 
-  id:string;
+  @PrimaryGeneratedColumn("uuid")
+  id?:string;
 
+  @Column()
   name:string;
 
+  @Column()
   login:string;
 
+  @Column()
   password?:string;
 
+  deletedId?:null|string;
+
   constructor({
-    id = uuidv4(),
+    id = uuid(),
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
   } = {} as IUser) {
-    this.id = id;
+    this.id = id,
     this.name = name;
     this.login = login;
     this.password = password;
+    this.deletedId = null;
   }
 
-  async toResponse ():Promise<IUserResponse> {
-    const { id, name, login }:IUserResponse = this;
-    return { id, name, login };
-  }  
 }
-
-
-module.exports.User = User;

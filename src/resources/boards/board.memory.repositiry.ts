@@ -1,87 +1,84 @@
-
-import { IBoard } from './boards.model';
+import {EntityManager } from 'typeorm';
+import { Board, IBoard, IBoardRes } from './boards.model';
+import { Columns, IColumnReq } from './column.model';
+import Memory from '../helpers/delete.memory'
 
 const HandleError = require('../middleware/handleerrors')
 
-const {Board} = require('./boards.model');
-
-class BoardDB {
-   boards: Array <IBoard> ;
-
-    constructor(){
-       this.boards = [new Board()];
+const wrap = async(cb:EntityManager, boardId:string):Promise<IBoardRes> => {
+  const boardres = await cb.findOne(Board, boardId);
+  if (boardres) {
+  const columnsres = await cb.find(Columns, { boardId });
+    if (columnsres.length) {
+      const columns = columnsres.map (col => {
+        const {id, title, order} = col;
+        return {id, title, order};
+      })
+      const {...res} = {columns, ...boardres};
+      return {...res}
     }
+  }
+  throw HandleError.NotFound
+}
 
+const createBoard = async (cb:EntityManager, boardopt:Partial<IBoard>):Promise<IBoardRes> => {
+  const board = new Board ({title:boardopt.title});
+  const boardId = board.id;
+  await cb.save(Board, board);
+  const columns:Array<IColumnReq> = [];
+  if (Array.isArray (boardopt.columns)) {
+    boardopt.columns.forEach ((col) => {
+      const { ...items} =  {boardId, ...col};
+      const column = new Columns({ ...items});
+      cb.save(Columns, column);
+      const {id, title, order}:IColumnReq = column
+      columns.push({id, title, order});
+    })
+  }
+  const {...res} = {...board, columns}
+  return {...res}
+}
 
-   async addBoard (options: IBoard):Promise<IBoard> {
-     const res = Object.keys(options);
-     if (res.length === 2) {
-        res.forEach (optionkey => {
-          if ((optionkey !== "columns" && optionkey !== "title")) {
-              throw Error ("Bad reqest")
-          }
-        });
-        const NewBoard = new Board (options);
-        this.boards.push(NewBoard)
-        return NewBoard;
-     }
-     throw HandleError.BadReqest;
+const getBoards = async (cb:EntityManager):Promise<IBoardRes[]> => {
+  const boardrep = await cb.find(Board);
+  const wrapper = async(boardId:Board['id']) => wrap (cb, boardId);
+    const res =  boardrep.map((board) =>  wrapper(board.id))
+    return Promise.all(res)
+}
+
+const getBoard = async (cb: EntityManager, boardId:string|undefined):Promise<IBoardRes> => {
+  const boardres = await cb.findOne(Board, boardId);
+  if (boardres) {
+  const columnsres = await cb.find(Columns, { boardId });
+    if (columnsres.length) {
+      const columns = columnsres.map (col => {
+        const {id, title, order} = col;
+        return {id, title, order};
+      })
+      const {...res} = {columns, ...boardres};
+      return {...res}
     }
+  }
+  throw HandleError.NotFound
+}
 
-   async updateBoard (boardId:string, options:IBoard):Promise<IBoard> {
-       const result = await this.findBoard(boardId);
-       if ( result !== null) {
-         const newBoard = new Board (options);
-         this.boards.splice(result,1,newBoard);
-         return newBoard as IBoard;
-       }
-      throw HandleError.BadReqest
-    }
+const updateBoard = async (cb: EntityManager, boardId:string|undefined, boardopt:Partial<Board>):Promise<IBoardRes> => {
+  if (boardId!==undefined) {
+    const res = await cb.update(Board, boardId, { title: boardopt.title }).then(() => wrap (cb, boardId)) ;
+    return res
+  }
+  throw HandleError.NotFound
+}
 
+const deleteBoard = async (cb: EntityManager, boardId:string|undefined):Promise<'OK'>  => {
+  const result = await cb.find(Board,{id: boardId});
+  if (result) {
+  Memory.setBoardId(boardId as string)
+  await cb.delete(Board, boardId);
+  await cb.delete (Columns, {boardId}) 
+  return "OK"
+  }
+  throw HandleError.NotFound;
+}
 
-   async getBoard (boardId:string):Promise<IBoard> {
-      const result = await this.findBoard(boardId);
-      if (result !== null) {
-      return this.boards[result] as IBoard;
-      }
-      throw HandleError.NotFound
-    }
-
-
-    async findBoard (boardId:string): Promise <null|number> {
-      const result:Array<number> = [] ;
-      this.boards.forEach ( (board: IBoard , index:number): void => {
-        if ( board.id === boardId ) {
-          result.push(index);
-         }
-      });
-       if (result.length) {
-          if (result.length > 1) {
-            throw new Error ("Write error: multiple boards")
-           }
-        return result[0] as number;
-        }
-     return null;
-    }
-
-
-   async deleteBoard (boardId:string):Promise <'OK'> {
-    const result = await this.findBoard(boardId);
-      if (result !== null){
-        this.boards.splice(result,1);
-        return "OK"
-      }
-      throw HandleError.NotFound
-    }
-
-
-    async getAll (): Promise<Array<IBoard>> {
-        return this.boards; 
-    }
-
-} 
-
-
-const BD: BoardDB = new BoardDB();
-
-module.exports.BD = BD; 
+export {createBoard, getBoards, getBoard, updateBoard, deleteBoard};

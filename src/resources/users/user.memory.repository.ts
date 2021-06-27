@@ -1,79 +1,49 @@
-import { IUser, IUserResponse } from "./user.model";
-
-const UserModel = require('./user.model').User;
+import "reflect-metadata";
+import { EntityManager} from "typeorm";
+import { User, IUser } from "./user.model";
+import UserView from './user-view.model'
+import Memory from '../helpers/delete.memory'
 
 const HandleError = require('../middleware/handleerrors')
 
-const {userUpdateDelete} = require('./user.update.delete');
 
-class UsersBD {
+const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|undefined> => {
+  const user = new User(useropt);
+  await cb.save(User, user);
+  const res = await cb.findOneOrFail(UserView, { where: { id: user.id} })
+  return res
+}
 
-  users: Array<IUser>
+const getAll = async(cb: EntityManager):Promise<UserView[]>  =>  cb.find(UserView)
 
-  constructor() {
-    this.users = [];
-  }
-
-  async createNewUser (options:string):Promise<IUserResponse> {
-    const newUser = new UserModel(options);
-    this.users.push(newUser)
-    return newUser.toResponse();
-  }
-
- async deleteUser( userId:string ):Promise<'OK'|null>{
-    const result = await this.findUser(userId);
-    if (result !== null && typeof result === 'number' ) {
-      this.users.splice(result,1);
-      userUpdateDelete(userId);
-      return "OK";
+  
+const deleteUser = async (cb: EntityManager,  userId:string|undefined ):Promise<'OK'> => {
+  const result = await cb.findByIds(User, [userId]);
+    if (result) {
+    Memory.setUserId(userId as string);
+    await cb.delete(User, userId);
+    return "OK"
     }
     throw HandleError.Unauthorized;
   }
 
-
-  async updateUser ( userId:string, options:IUser ):Promise<IUserResponse|null>{
-    const result = await this.findUser(userId);
-    if (result !== null) {
-      const newUser = new UserModel (options);
-      this.users.splice(result,1,newUser);
-      return newUser?.toResponse()
-    }
-    return result;
-  }
-
-
-  async getUser (userId:string):Promise<IUserResponse|null> {
-    const result = await this.findUser(userId);
-    if (typeof result === 'number'){
-        const user:IUser|undefined = this.users[result];
-        if (typeof user !== 'undefined')
-        return user.toResponse();
+const updateUser = async (cb:EntityManager,  userId:string|undefined, useropt:User):Promise<UserView> => {
+  const result:User|undefined = await cb.findOne(User, userId);
+    if (result !== undefined && result.password === useropt.password) {
+      await cb.update(User, userId, useropt);
+      return cb.findOneOrFail(UserView, { where: { id: userId} })
     }
     throw HandleError.NotFound;
   }
 
- 
-  async findUser (userId:string): Promise<number|null> {
-    const result:number[] = [];
-    this.users.forEach ( (user, index) => {
-      if ( user.id === userId ) {
-       result.push(index);
-      }
-    });
-       if (result.length === 1 && typeof result[0] !== 'undefined') {
-        return result[0];
-       }
+
+ const getUser = async(cb:EntityManager, userId:string|undefined):Promise<UserView> => {
+    const result = cb.findOneOrFail(UserView, { where: { id: userId} });
+    if(result) {
+      return result;
+    }
     throw HandleError.NotFound;
   }
 
-  async getAll ():Promise<Array<IUserResponse>> {
-      const reposit:Array<IUser> = this.users;
-      const arrResp:Array<IUserResponse> = reposit.map (user => user.toResponse());
-      return arrResp;
-  }
-  
-}
 
-const UserBD:UsersBD = new UsersBD();
-
-module.exports.UserBD = UserBD;
+ export {createUser, getAll, deleteUser, updateUser, getUser}

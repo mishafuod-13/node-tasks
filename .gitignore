@@ -1,4 +1,6 @@
 node_modules/
 docs/
 src/resourses/middleware/access.log
-rc/resourses/middleware/error.log
+src/resourses/middleware/error.log
+src/resources/middleware/logs/error.log 
+src/resources/middleware/logs/access.log

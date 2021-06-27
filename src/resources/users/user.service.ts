@@ -1,15 +1,23 @@
-import {IUserResponse} from './user.model';
+import {EntityManager} from "typeorm";
+import {User, IUser} from "./user.model";
+import UserView from "./user-view.model";
 
-const {UserBD} = require('./user.memory.repository');
+import {
+    createUser,
+    getAll, 
+    deleteUser, 
+    updateUser,
+    getUser 
+} from './user.memory.repository'
 
-const createNewUser = async (req:IUserResponse):Promise<IUserResponse> => UserBD.createNewUser(req);
+const createNewUser = async(cb:EntityManager, userEnt: IUser):Promise<UserView|undefined> =>  createUser(cb, userEnt)
 
-const getAll = async ():Promise<Array<IUserResponse>> => UserBD.getAll();
+const getAllUsers = async (cb:EntityManager):Promise<UserView[]> => getAll (cb);
 
-const getUser = async (userId:string):Promise<IUserResponse|null> => UserBD.getUser(userId);
+const deleteUserById = async (cb: EntityManager, userId:string|undefined ):Promise<'OK'> =>  deleteUser(cb, userId);
 
-const deleteUser = async (userId:string):Promise<'OK'|null> => UserBD.deleteUser(userId);
+const updateUserById = async (cb: EntityManager, userId:string|undefined, options:User):Promise<IUser> => updateUser(cb, userId, options);
 
-const updateUser = async (userId:string, options:IUserResponse):Promise<IUserResponse|null> => UserBD.updateUser(userId, options);
+const getUserById = async (cb: EntityManager, userId:string|undefined):Promise<IUser> => getUser(cb, userId);
 
-module.exports = {getAll, getUser, updateUser, deleteUser,createNewUser };
+export { createNewUser, getAllUsers, deleteUserById, updateUserById, getUserById};

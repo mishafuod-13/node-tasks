@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import "reflect-metadata";
 
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
@@ -9,7 +10,9 @@ const userRouter =  require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/boards.router');
 const taskRouter =  require('./resources/tasks/task.router');
 
+
 const app = express();
+
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());

@@ -5,7 +5,6 @@
     "type": "git",
     "url": ""
   },
-  "type": "commonjs",
   "description": "REST service starter for RS School",
   "main": "src/server.js",
   "scripts": {
@@ -14,7 +13,9 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-denv DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
-    "doc": "jsdoc -c ./jsdoc.json"
+    "doc": "jsdoc -c ./jsdoc.json",
+    "typeorm:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
+    "typeorm:down": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:down"
   },
   "keywords": [
     "rs",
@@ -51,13 +52,17 @@
     "dotenv": "9.0.0",
     "express": "4.17.1",
     "morgan": "^1.10.0",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "4.1.6",
-    "uuid": "8.3.2",
+    "typeorm": "^0.2.34",
+    "uuid": "^8.3.2",
     "yamljs": "0.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.12",
     "@types/morgan": "^1.9.2",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",
