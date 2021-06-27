@@ -11,7 +11,6 @@ export default {
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
-  synchronize: true,
   logging: true,
   entities: ["./src/resources/**/*.model{.ts,.js}"],
   subscribers : ["./src/resources/helpers/*.subscriber.ts"],

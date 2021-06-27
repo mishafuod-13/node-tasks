@@ -347,3 +347,25 @@ HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Una
 HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
 HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
 HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Not Found; ::Response Status Code:404 :: Message:Not Found
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
+HandleError:HandleError: Unauthorized; ::Response Status Code:401 :: Message:Unauthorized
