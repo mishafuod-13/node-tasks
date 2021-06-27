@@ -20,7 +20,7 @@ export default class UserSubscriber implements EntitySubscriberInterface<User> {
 
     }
 
-    async beforeInsert(event: InsertEvent<User>) {
+    async beforeInsert(event: InsertEvent<User>):Promise<void> {
       event.entity.password = bcrypt.hashSync(event.entity.password, 10)
     }
 

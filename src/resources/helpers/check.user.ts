@@ -1,6 +1,7 @@
 import { getManager, createConnection} from "typeorm";
-import { User } from "../users/user.model";
 import { v4 as uuid } from "uuid";
+import { User } from "../users/user.model";
+
 const dotenv = require('dotenv');
 const PATH = require('path');
 
@@ -15,7 +16,7 @@ const {
     USER_ADMIN_LOGIN
   } = process.env;
 
-async function checkUserAdminExist () {
+async function checkUserAdminExist ():Promise<true|'OK'> {
     await createConnection();
     const entityManager = getManager();
     const check = await entityManager.findOne(User, {login: USER_ADMIN_LOGIN, password: USER_ADMIN_PASSWORD })
