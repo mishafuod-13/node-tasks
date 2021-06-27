@@ -3,7 +3,7 @@ import { EntityManager } from 'typeorm';
 import {ITask, Task} from './task.model';
 import {Board} from '../boards/boards.model'
 
-const HandleError = require('../middleware/handleerrors')
+const HandleError = require('../../middleware/handleerrors')
 
 const addTask = async (cb: EntityManager, boardIds:string|undefined, taskoption:ITask):Promise<ITask> =>  {
       const board  = await cb.findOneOrFail(Board, boardIds);

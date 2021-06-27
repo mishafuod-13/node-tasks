@@ -5,7 +5,7 @@ dotenv.config({
   path: PATH.join(__dirname, '../../.env')
 });
 
-module.exports = {
+export default  {
   PORT:process.env['PORT'],
   HOST:process.env['HOST'],
   NODE_ENV: process.env['NODE_ENV'],
