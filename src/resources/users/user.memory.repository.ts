@@ -4,7 +4,7 @@ import { User, IUser } from "./user.model";
 import UserView from './user-view.model'
 import Memory from '../helpers/delete.memory'
 
-const HandleError = require('../middleware/handleerrors')
+const HandleError = require('../../middleware/handleerrors')
 
 
 const createUser = async (cb:EntityManager, useropt:IUser):Promise<UserView|undefined> => {
@@ -29,7 +29,7 @@ const deleteUser = async (cb: EntityManager,  userId:string|undefined ):Promise<
 
 const updateUser = async (cb:EntityManager,  userId:string|undefined, useropt:User):Promise<UserView> => {
   const result:User|undefined = await cb.findOne(User, userId);
-    if (result !== undefined && result.password === useropt.password) {
+    if (result !== undefined ) {
       await cb.update(User, userId, useropt);
       return cb.findOneOrFail(UserView, { where: { id: userId} })
     }

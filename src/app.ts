@@ -5,10 +5,12 @@ const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
-const {reqAccessLog, errorHandling} = require('./resources/middleware/logger')
+const {reqAccessLog, errorHandling} = require('./middleware/logger')
 const userRouter =  require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/boards.router');
 const taskRouter =  require('./resources/tasks/task.router');
+const accessToken = require('./middleware/jwt.token')
+const loginRouter = require('./resources/login/login.router')
 
 
 const app = express();
@@ -28,10 +30,12 @@ app.use('/', (req: Request, res: Response, next: NextFunction ) => {
 });
 
 app.use(reqAccessLog);
+app.use(accessToken);
 
 app.use('/users', userRouter);
 app.use ('/boards', boardRouter);
 app.use ('/boards', taskRouter);
+app.use (loginRouter);
 
 app.use (errorHandling)
 

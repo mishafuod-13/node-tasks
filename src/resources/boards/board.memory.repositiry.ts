@@ -3,7 +3,7 @@ import { Board, IBoard, IBoardRes } from './boards.model';
 import { Columns, IColumnReq } from './column.model';
 import Memory from '../helpers/delete.memory'
 
-const HandleError = require('../middleware/handleerrors')
+const HandleError = require('../../middleware/handleerrors')
 
 const wrap = async(cb:EntityManager, boardId:string):Promise<IBoardRes> => {
   const boardres = await cb.findOne(Board, boardId);
