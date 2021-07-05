@@ -1,4 +1,6 @@
 node_modules/
+express/node_modules/
+migrate-to-nest/node_modules/
 docs/
 src/resourses/middleware/access.log
 src/resourses/middleware/error.log
