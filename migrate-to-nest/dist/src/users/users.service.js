@@ -21,26 +21,34 @@ let UsersService = class UsersService {
     constructor(usersRepository) {
         this.usersRepository = usersRepository;
     }
+    wrap(userDto) {
+        const { login, id, name } = userDto;
+        return { login, id, name };
+    }
     async findAll() {
-        return this.usersRepository.find();
+        return this.usersRepository.find().then(users => users.map(user => this.wrap(user)));
     }
     async update(id, newUserDto) {
         const result = await this.usersRepository.findOne(id);
         if (result !== undefined) {
             await this.usersRepository.update(id, newUserDto);
-            return this.findOne(id);
+            return this.usersRepository.findOne(id).then(user => this.wrap(user));
         }
     }
     async create(createUserDto) {
         const newUser = new user_entity_1.User(createUserDto);
         await this.usersRepository.save(newUser);
-        return newUser;
+        return this.wrap(newUser);
     }
     async findOne(id) {
-        return await this.usersRepository.findOne(id);
+        const result = await this.usersRepository.findOne(id);
+        if (result) {
+            return this.wrap(result);
+        }
     }
     async remove(id) {
         await this.usersRepository.delete(id);
+        return "OK";
     }
 };
 UsersService = __decorate([

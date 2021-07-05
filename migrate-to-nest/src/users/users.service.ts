@@ -11,30 +11,38 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  wrap (userDto: User):IUserParams {
+    const {login, id, name} = userDto;
+    return  {login, id, name};
   }
 
-  async update (id: string, newUserDto:IUserParams): Promise<User> {
+  async findAll(): Promise<IUserParams[]> {
+    return this.usersRepository.find().then(users => users.map(user =>this.wrap(user)));
+  }
+
+  async update (id: string, newUserDto:IUserParams): Promise<IUserParams> {
     const result:User|undefined = await this.usersRepository.findOne(id);
     if (result !== undefined ) {
       await this.usersRepository.update(id, newUserDto);
-      return this.findOne(id)
+      return this.usersRepository.findOne(id).then(user => this.wrap(user))
     }
   }
 
-  async create (createUserDto: IUserParams): Promise<User> {
+  async create (createUserDto: IUserParams): Promise<IUserParams> {
     const newUser = new User (createUserDto)
-    await this.usersRepository.save(newUser);
-    return newUser
-  }
-  
-
-  async findOne(id: string): Promise<User> {
-    return await this.usersRepository.findOne(id);
+    await this.usersRepository.save(newUser)
+    return this.wrap(newUser)
   }
 
-  async remove(id: string): Promise<void> {
+  async findOne(id: string): Promise<IUserParams> {
+    const result = await this.usersRepository.findOne(id);
+    if (result) {
+      return this.wrap(result)
+    }
+  }
+
+  async remove(id: string): Promise<'OK'> {
     await this.usersRepository.delete(id);
+    return "OK"
   }
 }

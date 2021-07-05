@@ -4,9 +4,10 @@ import { IUserParams } from './interfaces/user-params.interface';
 export declare class UsersService {
     private usersRepository;
     constructor(usersRepository: Repository<User>);
-    findAll(): Promise<User[]>;
-    update(id: string, newUserDto: IUserParams): Promise<User>;
-    create(createUserDto: IUserParams): Promise<User>;
-    findOne(id: string): Promise<User>;
-    remove(id: string): Promise<void>;
+    wrap(userDto: User): IUserParams;
+    findAll(): Promise<IUserParams[]>;
+    update(id: string, newUserDto: IUserParams): Promise<IUserParams>;
+    create(createUserDto: IUserParams): Promise<IUserParams>;
+    findOne(id: string): Promise<IUserParams>;
+    remove(id: string): Promise<'OK'>;
 }

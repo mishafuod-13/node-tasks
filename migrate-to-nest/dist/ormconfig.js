@@ -1,5 +1,4 @@
 const { POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, } = process.env;
-console.log(POSTGRES_PORT);
 module.exports = {
     type: "postgres",
     port: POSTGRES_PORT,
