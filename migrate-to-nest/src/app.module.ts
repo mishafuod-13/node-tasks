@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {getConnectionOptions} from 'typeorm'
 import { BoardsModule } from './boards/boards.module';
+import { TasksModule } from './tasks/tasks.module';
 const config = require('../ormconfig')
 
 @Module({
@@ -11,7 +12,7 @@ const config = require('../ormconfig')
       Object.assign(await getConnectionOptions(), {
         autoLoadEntities: true,
       }),
-  }), UsersModule, BoardsModule],
+  }), UsersModule, BoardsModule, TasksModule],
 })
 
 export class AppModule {

@@ -50,6 +50,5 @@ export class UsersService {
       return "OK"
     }
     throw new UnauthorizedException();
-   
   }
 }
