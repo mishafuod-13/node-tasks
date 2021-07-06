@@ -36,6 +36,7 @@ let BoardsService = class BoardsService {
                 return { ...res };
             }
         }
+        throw new common_1.NotFoundException();
     }
     async findAll() {
         const boardrep = await this.boardsRepository.find();
@@ -44,8 +45,12 @@ let BoardsService = class BoardsService {
         return Promise.all(res);
     }
     async update(id, boardDto) {
-        const res = await this.boardsRepository.update(id, { title: boardDto.title }).then(() => this.wrap(id));
-        return res;
+        const check = await this.boardsRepository.findOne(id);
+        if (check) {
+            const res = await this.boardsRepository.update(id, { title: boardDto.title }).then(() => this.wrap(id));
+            return res;
+        }
+        throw new common_1.NotFoundException();
     }
     async create(createBoardDto) {
         const board = new board_entity_1.Board({ title: createBoardDto.title });
@@ -77,14 +82,16 @@ let BoardsService = class BoardsService {
                 return { ...res };
             }
         }
+        throw new common_1.NotFoundException();
     }
     async remove(id) {
-        const result = await this.boardsRepository.findOne(id);
-        if (result) {
+        const check = await this.boardsRepository.findOne(id);
+        if (check) {
             await this.boardsRepository.delete(id);
             await this.columnRepository.delete({ boardId: id });
             return "OK";
         }
+        throw new common_1.NotFoundException();
     }
 };
 BoardsService = __decorate([

@@ -34,6 +34,7 @@ let UsersService = class UsersService {
             await this.usersRepository.update(id, newUserDto);
             return this.usersRepository.findOne(id).then(user => this.wrap(user));
         }
+        throw new common_1.NotFoundException();
     }
     async create(createUserDto) {
         const newUser = new user_entity_1.User(createUserDto);
@@ -45,10 +46,15 @@ let UsersService = class UsersService {
         if (result) {
             return this.wrap(result);
         }
+        throw new common_1.NotFoundException();
     }
     async remove(id) {
-        await this.usersRepository.delete(id);
-        return "OK";
+        const result = await this.usersRepository.findOne(id);
+        if (result) {
+            await this.usersRepository.delete(id);
+            return "OK";
+        }
+        throw new common_1.UnauthorizedException();
     }
 };
 UsersService = __decorate([

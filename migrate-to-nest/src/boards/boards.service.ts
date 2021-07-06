@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from './entities/board.entity';
@@ -28,6 +28,7 @@ export class BoardsService {
         return {...res}
       }
     }
+    throw new NotFoundException()
   }
 
   async findAll(): Promise<IBoardRes[]> {
@@ -38,8 +39,12 @@ export class BoardsService {
   }
 
   async update (id: string, boardDto:IBoardRes): Promise<IBoardRes> {
-    const res = await this.boardsRepository.update(id, { title: boardDto.title }).then(() => this.wrap (id));
-    return res
+    const check = await this.boardsRepository.findOne(id)
+    if (check){
+      const res = await this.boardsRepository.update(id, { title: boardDto.title }).then(() => this.wrap (id));
+      return res
+    }
+    throw new NotFoundException()
   }
 
   async create (createBoardDto: IBoardRes): Promise<IBoardRes> {
@@ -73,14 +78,16 @@ export class BoardsService {
         return {...res}
       }
     }
+    throw new NotFoundException()
   }
 
   async remove(id: string): Promise<'OK'> {
-    const result = await this.boardsRepository.findOne(id);
-    if (result) {
+    const check = await this.boardsRepository.findOne(id);
+    if (check) {
     await this.boardsRepository.delete(id);
     await this.columnRepository.delete ({boardId : id}) 
     return "OK"
     }
+    throw new NotFoundException()
   }
 }

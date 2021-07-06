@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
@@ -26,6 +26,7 @@ export class UsersService {
       await this.usersRepository.update(id, newUserDto);
       return this.usersRepository.findOne(id).then(user => this.wrap(user))
     }
+    throw new NotFoundException()
   }
 
   async create (createUserDto: IUserParams): Promise<IUserParams> {
@@ -39,10 +40,16 @@ export class UsersService {
     if (result) {
       return this.wrap(result)
     }
+    throw new NotFoundException();
   }
 
   async remove(id: string): Promise<'OK'> {
-    await this.usersRepository.delete(id);
-    return "OK"
+    const result = await this.usersRepository.findOne(id)
+    if (result){
+      await this.usersRepository.delete(id);
+      return "OK"
+    }
+    throw new UnauthorizedException();
+   
   }
 }
