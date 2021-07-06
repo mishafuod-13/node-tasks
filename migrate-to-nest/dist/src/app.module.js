@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const users_module_1 = require("./users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const boards_module_1 = require("./boards/boards.module");
 const config = require('../ormconfig');
 let AppModule = class AppModule {
 };
@@ -20,7 +21,7 @@ AppModule = __decorate([
                 useFactory: async () => Object.assign(await typeorm_2.getConnectionOptions(), {
                     autoLoadEntities: true,
                 }),
-            }), users_module_1.UsersModule],
+            }), users_module_1.UsersModule, boards_module_1.BoardsModule],
     })
 ], AppModule);
 exports.AppModule = AppModule;
