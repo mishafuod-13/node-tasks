@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {getConnectionOptions, Connection} from 'typeorm'
 import { BoardsModule } from './boards/boards.module';
 import { TasksModule } from './tasks/tasks.module';
-const config = require('../ormconfig')
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync({
@@ -12,7 +12,7 @@ const config = require('../ormconfig')
       Object.assign(await getConnectionOptions(), {
         autoLoadEntities: true,
       }),
-  }), UsersModule, BoardsModule, TasksModule],
+  }), UsersModule, BoardsModule, TasksModule, LoginModule],
 })
 
 export class AppModule {

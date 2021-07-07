@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TasksController = void 0;
 const common_1 = require("@nestjs/common");
 const tasks_service_1 = require("./tasks.service");
+const login_guard_1 = require("../guards/login.guard");
 let TasksController = class TasksController {
     constructor(taskService) {
         this.taskService = taskService;
@@ -76,6 +77,7 @@ __decorate([
 ], TasksController.prototype, "remove", null);
 TasksController = __decorate([
     common_1.Controller('/boards'),
+    common_1.UseGuards(login_guard_1.LoginGuard),
     __metadata("design:paramtypes", [tasks_service_1.TasksService])
 ], TasksController);
 exports.TasksController = TasksController;

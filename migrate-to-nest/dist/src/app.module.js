@@ -16,7 +16,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const boards_module_1 = require("./boards/boards.module");
 const tasks_module_1 = require("./tasks/tasks.module");
-const config = require('../ormconfig');
+const login_module_1 = require("./login/login.module");
 let AppModule = class AppModule {
     constructor(connection) {
         this.connection = connection;
@@ -28,7 +28,7 @@ AppModule = __decorate([
                 useFactory: async () => Object.assign(await typeorm_2.getConnectionOptions(), {
                     autoLoadEntities: true,
                 }),
-            }), users_module_1.UsersModule, boards_module_1.BoardsModule, tasks_module_1.TasksModule],
+            }), users_module_1.UsersModule, boards_module_1.BoardsModule, tasks_module_1.TasksModule, login_module_1.LoginModule],
     }),
     __metadata("design:paramtypes", [typeorm_2.Connection])
 ], AppModule);

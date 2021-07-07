@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import Memory from '../../common/delete.memory'
 import {IUserParams} from './interfaces/user-params.interface'
+import { IUser } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
@@ -40,6 +41,14 @@ export class UsersService {
     const result = await this.usersRepository.findOne(id);
     if (result) {
       return this.wrap(result)
+    }
+    throw new NotFoundException();
+  }
+
+  async find(id: string): Promise<User> {
+    const result = await this.usersRepository.findOne(id);
+    if (result) {
+      return result
     }
     throw new NotFoundException();
   }

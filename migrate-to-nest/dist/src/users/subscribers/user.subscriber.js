@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSubscriber = void 0;
 const typeorm_1 = require("typeorm");
+const bcrypt = require("bcrypt");
 const user_entity_1 = require("../entities/user.entity");
 const task_entity_1 = require("../../tasks/entities/task.entity");
 const delete_memory_1 = require("../../../common/delete.memory");
@@ -23,10 +24,12 @@ let UserSubscriber = class UserSubscriber {
     }
     async beforeRemove(event) {
         const id = delete_memory_1.default.userId;
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if (id !== null) {
             await event.manager.update(task_entity_1.Task, { userId: id }, { userId: null });
         }
+    }
+    async beforeInsert(event) {
+        event.entity.password = bcrypt.hashSync(event.entity.password, 10);
     }
 };
 UserSubscriber = __decorate([

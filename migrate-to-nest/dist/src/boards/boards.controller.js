@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardsController = void 0;
 const boards_service_1 = require("./boards.service");
 const common_1 = require("@nestjs/common");
+const login_guard_1 = require("../guards/login.guard");
 let BoardsController = class BoardsController {
     constructor(boardsService) {
         this.boardsService = boardsService;
@@ -72,6 +73,7 @@ __decorate([
 ], BoardsController.prototype, "remove", null);
 BoardsController = __decorate([
     common_1.Controller('/boards'),
+    common_1.UseGuards(login_guard_1.LoginGuard),
     __metadata("design:paramtypes", [boards_service_1.BoardsService])
 ], BoardsController);
 exports.BoardsController = BoardsController;

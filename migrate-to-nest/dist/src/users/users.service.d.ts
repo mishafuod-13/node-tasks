@@ -9,5 +9,6 @@ export declare class UsersService {
     update(id: string, newUserDto: IUserParams): Promise<IUserParams>;
     create(createUserDto: IUserParams): Promise<IUserParams>;
     findOne(id: string): Promise<IUserParams>;
+    find(id: string): Promise<User>;
     remove(id: string): Promise<'OK'>;
 }

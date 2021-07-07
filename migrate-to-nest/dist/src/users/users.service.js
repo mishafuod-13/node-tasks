@@ -49,6 +49,13 @@ let UsersService = class UsersService {
         }
         throw new common_1.NotFoundException();
     }
+    async find(id) {
+        const result = await this.usersRepository.findOne(id);
+        if (result) {
+            return result;
+        }
+        throw new common_1.NotFoundException();
+    }
     async remove(id) {
         const result = await this.usersRepository.findOne(id);
         if (result) {
