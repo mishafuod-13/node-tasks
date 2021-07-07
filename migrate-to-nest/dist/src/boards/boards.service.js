@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const board_entity_1 = require("./entities/board.entity");
 const column_entity_1 = require("./entities/column.entity");
+const delete_memory_1 = require("../../common/delete.memory");
 let BoardsService = class BoardsService {
     constructor(boardsRepository, columnRepository) {
         this.boardsRepository = boardsRepository;
@@ -87,6 +88,7 @@ let BoardsService = class BoardsService {
     async remove(id) {
         const check = await this.boardsRepository.findOne(id);
         if (check) {
+            delete_memory_1.default.setBoardId(id);
             await this.boardsRepository.delete(id);
             await this.columnRepository.delete({ boardId: id });
             return "OK";

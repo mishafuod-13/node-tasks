@@ -13,13 +13,14 @@ const boards_controller_1 = require("./boards.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const board_entity_1 = require("./entities/board.entity");
 const column_entity_1 = require("./entities/column.entity");
+const board_subscriber_1 = require("./subscribers/board.subscriber");
 let BoardsModule = class BoardsModule {
 };
 BoardsModule = __decorate([
     common_1.Module({
         imports: [typeorm_1.TypeOrmModule.forFeature([board_entity_1.Board, column_entity_1.Columns])],
         controllers: [boards_controller_1.BoardsController],
-        providers: [boards_service_1.BoardsService]
+        providers: [boards_service_1.BoardsService, board_subscriber_1.BoardSubscriber]
     })
 ], BoardsModule);
 exports.BoardsModule = BoardsModule;

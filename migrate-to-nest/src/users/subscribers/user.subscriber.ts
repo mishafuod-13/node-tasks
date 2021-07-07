@@ -1,5 +1,5 @@
 import {Connection, EntitySubscriberInterface, EventSubscriber,RemoveEvent, InsertEvent} from 'typeorm'
-import bcrypt from 'bcrypt'
+//import bcrypt from 'bcrypt'
 import { User } from '../entities/user.entity';
 import { Task }  from '../../tasks/entities/task.entity'
 import Memory from '../../../common/delete.memory'

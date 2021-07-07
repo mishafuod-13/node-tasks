@@ -43,7 +43,7 @@ export class TasksService {
   }
 
   async findOne(boardId:string, taskId:string): Promise<ITask> {
-    const result = await this.tasksRepository.findOne(taskId);
+    const result = await this.tasksRepository.findOne({boardId: boardId, id:taskId});
     if (result) {
       return result
     }

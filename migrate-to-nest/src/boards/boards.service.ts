@@ -5,6 +5,7 @@ import { Board } from './entities/board.entity';
 import { Columns } from './entities/column.entity';
 import { IBoardRes } from './interfaces/board-res.interface';
 import { IColumnReq } from './interfaces/column-req.inteface';
+import Memory from '../../common/delete.memory'
 
 @Injectable()
 export class BoardsService {
@@ -84,6 +85,7 @@ export class BoardsService {
   async remove(id: string): Promise<'OK'> {
     const check = await this.boardsRepository.findOne(id);
     if (check) {
+    Memory.setBoardId(id as string)
     await this.boardsRepository.delete(id);
     await this.columnRepository.delete ({boardId : id}) 
     return "OK"
