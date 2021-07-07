@@ -8,12 +8,7 @@ module.exports = {
     logging: true,
     synchronize: true,
     entities: ["./src/**/entities/*.entity"],
-    subscribers: ["./src/resources/helpers/*.subscriber.ts"],
+    subscribers: ["./src/**/subscribers/*.subscriber"],
     migrations: ["./migration/*.ts"],
-    cli: {
-        entitiesDir: "./src/resources/**/*.model{.ts,.js}",
-        subscribersDir: "./src/resources/helpers/*.subscriber.ts",
-        migrationsDir: "./migration/"
-    }
 };
 //# sourceMappingURL=ormconfig.js.map

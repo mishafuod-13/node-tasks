@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import Memory from '../../common/delete.memory'
 import {IUserParams} from './interfaces/user-params.interface'
 
 @Injectable()
@@ -46,6 +47,7 @@ export class UsersService {
   async remove(id: string): Promise<'OK'> {
     const result = await this.usersRepository.findOne(id)
     if (result){
+      Memory.setUserId(id as string);
       await this.usersRepository.delete(id);
       return "OK"
     }

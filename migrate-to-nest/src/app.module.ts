@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {getConnectionOptions} from 'typeorm'
+import {getConnectionOptions, Connection} from 'typeorm'
 import { BoardsModule } from './boards/boards.module';
 import { TasksModule } from './tasks/tasks.module';
 const config = require('../ormconfig')
@@ -16,6 +16,7 @@ const config = require('../ormconfig')
 })
 
 export class AppModule {
-  
+  constructor(private connection: Connection) {}
 }
+
 
