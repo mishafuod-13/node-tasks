@@ -12,7 +12,6 @@ export class LoginService {
         const userRepository = getManager().getRepository(User);
         const findRes = await userRepository.findOne({login: login});
         const compare =  await bcrypt.compare(String(password), String(findRes.password))
-        console.log (findRes, compare)
         if (findRes && await bcrypt.compare(String(password), String(findRes.password))) {
             return findRes;
         }
