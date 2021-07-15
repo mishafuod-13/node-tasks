@@ -1,30 +1,15 @@
 {
-    "compilerOptions": {
-      "target": "es2020",
-      "allowJs": false,
-      "outDir": "./build",
-      "rootDir": "./src/",
-      "downlevelIteration": false,
-      "strict": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noImplicitReturns": true,
-      "noFallthroughCasesInSwitch": true,
-      "noUncheckedIndexedAccess": true,
-      "noPropertyAccessFromIndexSignature": true,
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
-    },
-    "exclude": [
-      "node_modules/",
-      "build"
-    ],
-    "include": [
-      "./src/**/*.ts",
-      "./src/**/*.js"
-, "src/resources/users/user.update.delete.ts"    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2020",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true
+  }
 }

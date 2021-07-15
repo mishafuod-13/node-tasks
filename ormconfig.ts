@@ -5,20 +5,15 @@ const {
   POSTGRES_DB,
 } = process.env;
 
-export default {
+module.exports =  {
   type: "postgres",
   port: POSTGRES_PORT,
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   logging: true,
-  entities: ["./src/resources/**/*.model{.ts,.js}"],
-  subscribers : ["./src/resources/helpers/*.subscriber.ts"],
-  migrationsTableName: "migration",
+  synchronize: true,
+  entities: ["./src/**/entities/*.entity"],
+  subscribers : ["./src/**/subscribers/*.subscriber"],
   migrations: ["./migration/*.ts"],
-    cli: {
-        entitiesDir: "./src/resources/**/*.model{.ts,.js}",
-        subscribersDir:"./src/resources/helpers/*.subscriber.ts",
-        migrationsDir: "./migration/"
-    }
 }
