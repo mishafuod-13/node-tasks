@@ -1,3 +1,4 @@
+dist/
 node_modules/
 express/node_modules/
 migrate-to-nest/node_modules/

@@ -1,5 +1,5 @@
 export interface IColumnReq {
-    id?: string;
-    title?: string;
-    order?: number;
+  id?: string;
+  title?: string;
+  order?: number;
 }
