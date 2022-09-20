@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { getManager } from 'typeorm';
+import { getManager , createConnection} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entities/user.entity';
 import { IUser } from '../users/interfaces/user.interface';
@@ -8,6 +8,7 @@ import { IUser } from '../users/interfaces/user.interface';
 export class LoginService {
   async checkAuthenticate(user: IUser): Promise<false | User> {
     const { login, password } = user;
+    const connection = await createConnection();
     const userRepository = getManager().getRepository(User);
     const findRes = await userRepository.findOneByOrFail({ login: login });
     const compare = await bcrypt.compare(
