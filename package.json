@@ -21,7 +21,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:posgtres-prebuild": "docker-compose -f \"docker-compose.yaml\" up -d --build",
+    "docker:postgres-run" : "cross-env POSTGRES_PASSWORD=12345 docker run -it -e POSTGRES_PASSWORD node-tasks_postgres"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.11",

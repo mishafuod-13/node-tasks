@@ -1,40 +1,41 @@
-import { Entity, PrimaryGeneratedColumn,  Column, BaseEntity} from 'typeorm';
-import { v4 as uuid } from "uuid";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 import { ITask } from '../interfaces/task.interface';
 
 @Entity()
-export class Task extends BaseEntity  {
-  @PrimaryGeneratedColumn("uuid")
-  id:string;
+export class Task extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
-  title?:string;
+  title?: string;
 
   @Column()
-  order?:number;
+  order?: number;
 
   @Column()
-  description?:string;
+  description?: string;
 
   @Column({
     type: 'uuid',
     nullable: true,
   })
-  userId:string|null;
+  userId: string | null;
 
   @Column({
     type: 'uuid',
     nullable: true,
   })
-  columnId:string|null;
-  
+  columnId: string | null;
+
   @Column({
     type: 'uuid',
     nullable: true,
   })
-  boardId:string|null;
+  boardId: string | null;
 
-    constructor ({
+  constructor(
+    {
       id = uuid(),
       title = 'AAAtyty',
       order = 0,
@@ -42,14 +43,15 @@ export class Task extends BaseEntity  {
       userId = null,
       columnId = null,
       boardId = null,
-    } = {} as ITask) {
-      super();
-      this.id = id;
-      this.title = title;
-      this.order = order;
-      this.description = description;
-      this.userId = userId;
-      this.columnId = columnId;
-      this.boardId = boardId;
-    } 
+    } = {} as ITask,
+  ) {
+    super();
+    this.id = id;
+    this.title = title;
+    this.order = order;
+    this.description = description;
+    this.userId = userId;
+    this.columnId = columnId;
+    this.boardId = boardId;
+  }
 }

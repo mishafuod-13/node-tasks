@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+ postgres:
+    container_name: postgres-container
+    build: ./docker/
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      APP_PORT: ${APP_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    networks:
+      - app
+    restart: always
+
+networks:
+  app: 
+    driver: bridge
+
+volumes: 
+  my-app:
+  my-app-log:
+  data-volume: 
