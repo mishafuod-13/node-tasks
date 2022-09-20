@@ -76,18 +76,18 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 1. Install Docker :
 
 for Mac & Windows : https://docs.docker.com/desktop/
+
 for Linux (Ubuntu example) : https://docs.docker.com/engine/install/ubuntu/
 
 2. Start Docker-containers :
 
 In the current working directory (where the docker-compose.yaml file is located) give the console command:
 ```
-docker compose -p <your-image-name> up
+docker-compose -p <your-image-name> up
 ```
 If installed correctly, a message should appear in the console (may vary slightly on different systems):
 ```
-postgres_1  | <current date> LOG:  database system is ready to accept connections
-node_1      | App is running on http://localhost:<PORT_ENV>
+node-tasks_postgres  | <current date> LOG:  database system is ready to accept connections
 ```
 3. Working with Docker-containers :
 
@@ -101,7 +101,7 @@ For more information, please visit: https://docs.docker.com/engine/reference/com
 
 In the current working directory (where the docker-compose.yaml file is located) give the console command:
 ```
-docker compose -p <your-image-name> down
+docker-compose -p <your-image-name> down
 ```
 5. Remote Docker-containers :
  
